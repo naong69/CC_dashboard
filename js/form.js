@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let current = 1;
 
   function showStep(n) {
+    current = n;
+
     panes.forEach(p => {
       const isTarget = Number(p.dataset.stepPane) === n;
       p.classList.toggle('show', isTarget);
@@ -29,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (n === totalSteps) buildReviewSummary();
 
-    current = n;
     document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -51,6 +52,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Checkbox -> paired field: enable + require the target only while its checkbox is checked.
+  function setupConditionalFields() {
+    form.querySelectorAll('[data-target]').forEach(trigger => {
+      const target = form.querySelector(trigger.dataset.target);
+      if (!target) return;
+
+      const sync = () => {
+        target.disabled = !trigger.checked;
+        target.required = trigger.checked;
+      };
+      trigger.addEventListener('change', sync);
+      sync();
+    });
+  }
+
+  // Text field -> checkbox group: enable the group's checkboxes only once the field has a value.
+  function setupProvinceGatedGroups() {
+    form.querySelectorAll('[data-enables]').forEach(trigger => {
+      const group = form.querySelector(trigger.dataset.enables);
+      if (!group) return;
+      const boxes = Array.from(group.querySelectorAll('input[type="checkbox"]'));
+
+      const sync = () => {
+        const hasValue = trigger.value.trim() !== '';
+        boxes.forEach(b => {
+          b.disabled = !hasValue;
+          if (!hasValue) b.checked = false;
+        });
+      };
+      trigger.addEventListener('input', sync);
+      trigger.addEventListener('change', sync);
+      sync();
+    });
+  }
+
   function validateCurrentPane() {
     const pane = panes.find(p => Number(p.dataset.stepPane) === current);
     const required = pane.querySelectorAll('[required]');
@@ -62,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function buildReviewSummary() {
     const summary = document.getElementById('reviewSummary');
+    if (!summary) return;
+
     const rows = [];
     const seen = new Set();
 
@@ -117,5 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   setupRequiredCheckboxGroups();
+  setupConditionalFields();
+  setupProvinceGatedGroups();
   showStep(1);
 });

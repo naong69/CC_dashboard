@@ -46,7 +46,7 @@
   <!-- Page title -->
   <section id="page-title">
     <div class="page-title-inner">
-      <h1>ACE: Action for Climate Empowerment</h1>
+      <!--<h1>ACE: Action for Climate Empowerment</h1> -->
       <h2>ข้อมูลโครงการที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ</h2>
       <hr>
       <p class="lead">กรุณากรอกข้อมูลให้ครบถ้วนในแต่ละขั้นตอน แล้วกด "ถัดไป" เพื่อดำเนินการต่อ</p>
@@ -69,44 +69,30 @@
         </li>
         <li class="step" data-step="3">
           <span class="step-num">3</span>
-          <span class="step-label">การดำเนินการ</span>
+          <span class="step-label">ACE</span>
         </li>
         <li class="step" data-step="4">
           <span class="step-num">4</span>
-          <span class="step-label">ความสำคัญ</span>
+          <span class="step-label">MARS</span>
         </li>
         <li class="step" data-step="5">
           <span class="step-num">5</span>
           <span class="step-label">พื้นที่ดำเนินโครงการ</span>
-        </li>
-        <li class="step" data-step="6">
-          <span class="step-num">6</span>
-          <span class="step-label">ข้อเสนอแนะ</span>
-        </li>
-        <li class="step" data-step="7">
-          <span class="step-num">7</span>
-          <span class="step-label">ตรวจสอบ &amp; ยืนยัน</span>
         </li>
       </ol>
 
       <form id="surveyForm" novalidate>
         <div class="tab-content">
 
-          <!-- Step 1: Respondent info -->
+          <!-- Step 1: Project info -->
           <div class="tab-pane fade show active" data-step-pane="1">
             <h3 class="pane-title">1. ข้อมูลโครงการ</h3>
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-4">
                 <label class="form-label" for="project_name">ชื่อโครงการ <span class="req">*</span></label>
                 <input type="text" class="form-control" id="project_name" name="project_name" data-label="ชื่อโครงการ" required>
               </div>
-
-               <div class="col-md-6 mb-3">
-                <label class="form-label" for="email">อีเมล <span class="req">*</span></label>
-                <input type="email" class="form-control" id="email" name="email" data-label="อีเมล" required>
-              </div>
-
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-4">
                 <label class="form-label d-block">ปีที่ดำเนินโครงการ <span class="req">*</span></label>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" name="project_year" id="year2565" value="2565" data-label="ปีที่ดำเนินโครงการ" required>
@@ -128,153 +114,650 @@
                   <input class="form-check-input" type="checkbox" name="project_year" id="year2569" value="2569" required>
                   <label class="form-check-label" for="year2569">2569</label>
                 </div>
-                <div class="form-text">สามารถเลือกหลายปี หากเป็นโครงการต่อเนื่อง</div>
+                <div class="form-text">สามารถเลือกหลายปีได้ หากเป็นโครงการต่อเนื่อง</div>
               </div>
-             
-              <div class="col-md-6 mb-3">
-                <label class="form-label" for="phone">เบอร์โทรศัพท์</label>
-                <input type="tel" class="form-control" id="phone" name="phone" data-label="เบอร์โทรศัพท์">
-              </div>
+              <div class="mb-3">
+              <p class="text-muted mb-3">โปรดระบุความสำคัญของการดำเนินโครงการ <span class="req">*</span> </p>
+              <textarea class="form-control" id="measureDetail" name="measureDetail" data-label="มาตรการอื่น ๆ" rows="2" required></textarea>
+            </div>
             </div>
           </div>
 
-          <!-- Step 2: Organization -->
+          <!-- Step 2: Target -->
           <div class="tab-pane fade" data-step-pane="2">
-            <h3 class="pane-title">2. ข้อมูลหน่วยงาน</h3>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label" for="orgname">ชื่อหน่วยงาน/องค์กร <span class="req">*</span></label>
-                <input type="text" class="form-control" id="orgname" name="orgname" data-label="ชื่อหน่วยงาน" required>
+            <h3 class="pane-title">2. ข้อมูลกลุ่มเป้าหมาย</h3>
+            <p class="text-muted mb-3">โปรดเลือกกลุ่มเป้าหมายอย่างน้อย 1 กลุ่ม <span class="req">*</span> แล้วระบุรายละเอียด</p>
+
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="target_group" id="target_public" value="Public" data-label="กลุ่มเป้าหมาย" data-target="#target_public_text" required>
+                <label class="form-check-label" for="target_public">Public:</label>
               </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label" for="region">ภูมิภาค <span class="req">*</span></label>
-                <select class="form-select" id="region" name="region" data-label="ภูมิภาค" required>
-                  <option value="" selected disabled>-- เลือกภูมิภาค --</option>
-                  <option>ภาคเหนือ</option>
-                  <option>ภาคกลาง</option>
-                  <option>ภาคตะวันออกเฉียงเหนือ</option>
-                  <option>ภาคใต้</option>
-                </select>
+              <textarea class="form-control mt-2" id="target_public_text" name="target_public_text" rows="1" data-label="รายละเอียด Public" disabled></textarea>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="target_group" id="target_private" value="Private" data-target="#target_private_text" required>
+                <label class="form-check-label" for="target_private">Private:</label>
               </div>
-              <div class="col-12 mb-3">
-                <label class="form-label mb-2 d-block">ประเภทหน่วยงาน</label>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="orgtype" id="orgtype1" value="ภาครัฐ" data-label="ประเภทหน่วยงาน">
-                  <label class="form-check-label" for="orgtype1">ภาครัฐ</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="orgtype" id="orgtype2" value="ภาคเอกชน">
-                  <label class="form-check-label" for="orgtype2">ภาคเอกชน</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="orgtype" id="orgtype3" value="ชุมชน/ประชาสังคม">
-                  <label class="form-check-label" for="orgtype3">ชุมชน/ประชาสังคม</label>
-                </div>
+              <textarea class="form-control mt-2" id="target_private_text" name="target_private_text" rows="1" data-label="รายละเอียด Private" disabled></textarea>
+            </div>
+
+            <div class="mb-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="target_group" id="target_people" value="People" data-target="#target_people_text" required>
+                <label class="form-check-label" for="target_people">People:</label>
               </div>
+              <textarea class="form-control mt-2" id="target_people_text" name="target_people_text" rows="1" data-label="รายละเอียด People" disabled></textarea>
             </div>
           </div>
 
-          <!-- Step 3: Climate impacts -->
+          <!-- Step 3: ACE details -->
           <div class="tab-pane fade" data-step-pane="3">
-            <h3 class="pane-title">3. ผลกระทบจากการเปลี่ยนแปลงสภาพภูมิอากาศ</h3>
-            <div class="mb-3">
-              <label class="form-label mb-2 d-block">พื้นที่ของท่านได้รับผลกระทบด้านใดบ้าง (เลือกได้มากกว่า 1 ข้อ)</label>
+            <h3 class="pane-title">3. รายละเอียดการดำเนินโครงการตาม ACE</h3>
+            <p class="text-muted mb-3">โปรดเลือกองค์ประกอบ ACE อย่างน้อย 1 ข้อ <span class="req">*</span> แล้วระบุรายละเอียด</p>
+
+            <div class="mb-4">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="impact" id="impact1" value="ภัยแล้ง" data-label="ผลกระทบที่ได้รับ">
-                <label class="form-check-label" for="impact1">ภัยแล้ง</label>
+                <input class="form-check-input" type="checkbox" name="ace_group" id="ace_n" value="N: public participation" data-label="องค์ประกอบ ACE" data-target="#ace_n_text" required>
+                <label class="form-check-label" for="ace_n"><b>N</b>: public participation</label>
+                <span class="info-tip" tabindex="0">
+                  <i class="fas fa-circle-question"></i>
+                  <span class="tooltip-box">
+                    <strong>Public participation</strong>
+                    การมีส่วนร่วมที่ครอบคลุมทุกภาคส่วน รับฟังความคิดเห็น การใช้สื่อสังคมออนไลน์ สร้างความร่วมมือระหว่างภาครัฐ-เอกชน-สถาบันการศึกษาพัฒนาแนวทางและระบบติดตามผล เพื่อให้การขับเคลื่อนมาตรการบรรเทาและปรับตัวต่อการเปลี่ยนแปลงสภาพภูมิอากาศ อย่างโปร่งใสต่อเนื่อง เกิดประสิทธิภาพสูงสุดในทุกระดับ
+                  </span>
+                </span>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="impact" id="impact2" value="น้ำท่วม">
-                <label class="form-check-label" for="impact2">น้ำท่วม</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="impact" id="impact3" value="อุณหภูมิสูงขึ้น">
-                <label class="form-check-label" for="impact3">อุณหภูมิสูงขึ้น</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="impact" id="impact4" value="ผลผลิตทางการเกษตรลดลง">
-                <label class="form-check-label" for="impact4">ผลผลิตทางการเกษตรลดลง</label>
-              </div>
+              <textarea class="form-control mt-2" id="ace_n_text" name="ace_n_text" rows="1" data-label="รายละเอียด N: public participation" disabled></textarea>
             </div>
-            <div class="mb-3">
-              <label class="form-label" for="impactDetail">รายละเอียดเพิ่มเติม</label>
-              <textarea class="form-control" id="impactDetail" name="impactDetail" data-label="รายละเอียดผลกระทบ" rows="3"></textarea>
+
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="ace_group" id="ace_e" value="E: education" data-target="#ace_e_text" required>
+                <label class="form-check-label" for="ace_e"><b>E</b>: education</label>
+                <span class="info-tip" tabindex="0">
+                  <i class="fas fa-circle-question"></i>
+                  <span class="tooltip-box">
+                    <strong>Education</strong>
+                    บูรณาการองค์ความรู้ด้านสภาพภูมิอากาศเข้าสู่ระบบการศึกษาทุกระดับ พร้อมทั้งผสานภูมิปัญญาดั้งเดิมและองค์ความรู้ท้องถิ่นเข้ากับหลักสูตรสนับสนุนการแลกเปลี่ยนบุคลากรผู้เชี่ยวชาญเพื่อเสริมสร้างศักยภาพให้สามารถขับเคลื่อนการเรียนรู้และพัฒนาทักษะที่จำเป็นในการรับมือกับวิกฤตการณ์โลกได้อย่างเข้มแข็ง
+                  </span>
+                </span>
+              </div>
+              <textarea class="form-control mt-2" id="ace_e_text" name="ace_e_text" rows="1" data-label="รายละเอียด E: education" disabled></textarea>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="ace_group" id="ace_t" value="T: training" data-target="#ace_t_text" required>
+                <label class="form-check-label" for="ace_t"><b>T</b>: training</label>
+                <span class="info-tip" tabindex="0">
+                  <i class="fas fa-circle-question"></i>
+                  <span class="tooltip-box">
+                    <strong>Training</strong>
+                    สร้างความร่วมมือเพื่อพัฒนาทักษะ-องค์ความรู้ทางเทคนิคให้แก่กลุ่มเป้าหมายสำคัญ ผ่านการพัฒนาเครื่องมือและหลักสูตรฝึกอบรมที่ทันสมัยเพื่อบูรณาการให้เข้ากับภารกิจหลักของหน่วยงานและสถาบันการศึกษา ซึ่งจะช่วยเพิ่มศักยภาพเชิงสถาบันในการตอบสนองต่อวิกฤตการณ์โลกได้อย่างมีประสิทธิภาพและยั่งยืน
+                  </span>
+                </span>
+              </div>
+              <textarea class="form-control mt-2" id="ace_t_text" name="ace_t_text" rows="1" data-label="รายละเอียด T: training" disabled></textarea>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="ace_group" id="ace_c" value="C: international cooperation" data-target="#ace_c_text" required>
+                <label class="form-check-label" for="ace_c"><b>C</b>: international cooperation</label>
+                <span class="info-tip" tabindex="0">
+                  <i class="fas fa-circle-question"></i>
+                  <span class="tooltip-box">
+                    <strong>International cooperation</strong>
+                    สร้างเครือข่ายความร่วมมือทุกระดับระหว่างภาครัฐ องค์กรระหว่างประเทศ ภาคเอกชน และภาคประชาสังคม เพื่อเสริมสร้างขีดความสามารถเน้นแลกเปลี่ยนข้อมูล ประสบการณ์ แนวปฏิบัติที่ดีที่สุด บทเรียนที่ได้รับ ตลอดจนสร้างจุดเชื่อมโยงระหว่างอนุสัญญาต่าง ๆ เพื่อเพิ่มประสิทธิภาพในการพัฒนาอย่างยั่งยืนและการรับมือร่วมกัน
+                  </span>
+                </span>
+              </div>
+              <textarea class="form-control mt-2" id="ace_c_text" name="ace_c_text" rows="1" data-label="รายละเอียด C: international cooperation" disabled></textarea>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="ace_group" id="ace_a" value="A: public awareness" data-target="#ace_a_text" required>
+                <label class="form-check-label" for="ace_a"><b>A</b>: public awareness</label>
+                <span class="info-tip" tabindex="0">
+                  <i class="fas fa-circle-question"></i>
+                  <span class="tooltip-box">
+                    <strong>Public awareness</strong>
+                    ส่งเสริมการเปลี่ยนแปลงพฤติกรรม สนับสนุนนโยบายที่เป็นมิตรต่อสภาพภูมิอากาศ ผ่านการสื่อสารที่ทันสมัย เน้นให้ข้อมูลที่ครอบคลุมทั้งสาเหตุ-แนวทางรับมือ รณรงค์ผ่านสื่อสังคมออนไลน์ สำรวจทัศนคติเพื่อประเมินผล-สร้างชุมชนแห่งการเรียนรู้ที่เปิดกว้างเพื่อเปลี่ยนความรู้ความเข้าใจเป็นการลงมือปฏิบัติจริงอย่างยั่งยืน
+                  </span>
+                </span>
+              </div>
+              <textarea class="form-control mt-2" id="ace_a_text" name="ace_a_text" rows="1" data-label="รายละเอียด A: public awareness" disabled></textarea>
+            </div>
+
+            <div class="mb-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="ace_group" id="ace_p" value="P: public access to data" data-target="#ace_p_text" required>
+                <label class="form-check-label" for="ace_p"><b>P</b>: public access to data</label>
+                <span class="info-tip" tabindex="0">
+                  <i class="fas fa-circle-question"></i>
+                  <span class="tooltip-box">
+                    <strong>Public access to data</strong>
+                    ประชาชนเข้าถึงข้อมูล นโยบาย ผลลัพธ์การดำเนินงานที่ถูกต้อง-โปร่งใส ทลายข้อจำกัดด้านภาษา ลิขสิทธิ์และระดับการรู้หนังสือ ผ่านการจัดทำเอกสารที่เข้าใจง่าย เผยแพร่ผ่านช่องทางดิจิทัลที่เข้าถึงได้เสรี เพื่อให้กลุ่มเป้าหมายโดยเฉพาะกลุ่มเปราะบาง-ผู้มีความต้องการพิเศษ สามารถรับรู้และตอบสนองต่อวิกฤตการณ์ภูมิอากาศได้อย่างเหมาะสม
+                  </span>
+                </span>
+              </div>
+              <textarea class="form-control mt-2" id="ace_p_text" name="ace_p_text" rows="1" data-label="รายละเอียด P: public access to data" disabled></textarea>
             </div>
           </div>
 
-          <!-- Step 4: Adaptation measures -->
+          <!-- Step 4: MARS -->
           <div class="tab-pane fade" data-step-pane="4">
-            <h3 class="pane-title">4. มาตรการปรับตัว/รับมือ</h3>
-            <div class="mb-3">
-              <label class="form-label mb-2 d-block">ท่านหรือหน่วยงานของท่านมีมาตรการรับมือใดบ้าง</label>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="measure" id="measure1" value="บริหารจัดการน้ำ" data-label="มาตรการรับมือ">
-                <label class="form-check-label" for="measure1">บริหารจัดการน้ำ</label>
+            <h3 class="pane-title">4. ความสอดคล้องกกับกรอบและแผนงานวิจัย</h3>
+            <p class="text-muted mb-3">โปรดเลือกกรอบปละแผนงานวิจัยด้านการเปลี่ยนแปลงสภาพภูมิอากาศ พ.ศ. 2570 - 2575 อย่างน้อย 1 ข้อ <span class="req">*</span> </p>
+
+            <div class="mars-grid">
+              <div class="mars-row">
+                <div><b>M: Mitigation</b> (ด้านการลดก๊าซเรือนกระจก)</div>
+                <div class="mars-options">
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_M1" value="M1" required><span class="chip-label">M1</span>
+                    <span class="tooltip-box">
+                      <strong>M1: ข้อมูลและองค์ความรู้</strong>
+                      ยกระดับการประเมินการปล่อย-ดูดกลับ พัฒนาระบบ MRV พัฒนาค่า Emission Factors วิเคราะห์-พัฒนา MACCs วิจัย Black Carbon-SLCP
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_M2" value="M2" required><span class="chip-label">M2</span>
+                    <span class="tooltip-box">
+                      <strong>M2: พลังงานและขนส่ง</strong>
+                      พัฒนาเทคโนโลยีพลังงานทดแทน-ทางเลือก เทคโนโลยีสมัยใหม่ เพิ่มประสิทธิภาพพลังงานเชื้อเพลิงฟอสซิล ออกแบบโครงข่าย Smart Grid พัฒนายานยนต์ EV
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_M3" value="M3" required><span class="chip-label">M3</span>
+                    <span class="tooltip-box">
+                      <strong>M3: กระบวนการอุตสาหกรรม-ผลิตภัณฑ์</strong>
+                      พัฒนาเทคโนโลยีการผลิตคาร์บอนต ่าในอุตสาหกรรมปูนซีเมนต์-โลหะ-เคมี ใช้วัสดุทดแทนในกระบวนการผลิตลด GHGs จากการใช้สาร HFCs, PFCs, SF6, NF3
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_M4" value="M4" required><span class="chip-label">M4</span>
+                    <span class="tooltip-box">
+                      <strong>M4: ภาคเกษตร</strong>
+                      พัฒนา Roadmap การกักเก็บคาร์บอนในดิน พัฒนาเทคโนโลยีดักจับ-กักเก็บคาร์บอนจากเชื้อเพลิงชีวมวล แนวทาง Climate Smart Agriculture นำเศษวัสดุเหลือใช้จากการเกษตรไปใช้ประโยชน์แทนการเผาในที่โล่ง
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_M5" value="M5" required><span class="chip-label">M5</span>
+                    <span class="tooltip-box">
+                      <strong>M5: ภาคของเสีย</strong>
+                      เทคโนโลยี นวัตกรรม แนวทางการจัดการของเสียภาคอุตสาหกรรมตามแนวคิดเศรษฐกิจหมุนเวียน เพิ่มประสิทธิภาพจัดการขยะชุมชนกับลดการปล่อย GHGs
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_M6" value="M6" required><span class="chip-label">M6</span>
+                    <span class="tooltip-box">
+                      <strong>M6: การดูดกลับก๊าซเรือนกระจก</strong>
+                      เทคโนโลยีดักจับ CO2 ความคุ้มค่าทางเศรษฐศาสตร์-ข้อจำกัด-ความปลอดภัย ประเมินการปล่อย GHGs จากการเผาในที่โล่ง-ไฟป่า แนวคิด Nature-based Solutions เพิ่มการกักเก็บคาร์บอนป่าไม้-ชายฝั่ง-ในดิน
+                    </span>
+                  </label>
+                </div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="measure" id="measure2" value="ปรับเปลี่ยนพันธุ์พืช/สัตว์">
-                <label class="form-check-label" for="measure2">ปรับเปลี่ยนพันธุ์พืช/สัตว์</label>
+
+              <div class="mars-row">
+                <div><b>A: Adaptation</b> (ด้านการปรับตัวต่อการเปลี่ยนแปลงสภาพภูมิอากาศ)</div>
+                <div class="mars-options">
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A1" value="A1" required><span class="chip-label">A1</span>
+                    <span class="tooltip-box">
+                      <strong>A1: ข้อมูลและองค์ความรู้</strong>
+                      ความรู้ Climate Science พัฒนา Platform, Hazard-Risk Map แนวทางประเมินผลกระทบ, Climate Risk-Resilience Index
+                    </span>  
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A2" value="A2" required><span class="chip-label">A2</span>
+                    <span class="tooltip-box">
+                      <strong>A2: การบริหารจัดการน้ำ</strong>
+                      แผนที่ความเสี่ยง-คุณภาพน้ำ ระบบบริหารจัดการน้ำ พื้นที่น้ำท่วม-แล้งซ้ำซาก ปัญหารุกล้าของน้ำเค็ม ผลกระทบการจัดการทรัพยากรน้ำข้ามพรมแดน
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A3" value="A3" required><span class="chip-label">A3</span>
+                    <span class="tooltip-box">
+                      <strong>A3: การเกษตรและความมั่นคงทางอาหาร</strong>
+                      พัฒนาเทคโนโลยีสมัยใหม่ พื้นที่เกษตรกรรมอย่างยั่งยืน ปรับปรุงพันธุ์พืช-สัตว์ ทำ Regenerative Agriculture พัฒนาแบบจำลองการเพาะปลูก-ระบบประกันภัยทางการเกษตร
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A4" value="A4" required><span class="chip-label">A4</span>
+                    <span class="tooltip-box">
+                      <strong>A4: การท่องเที่ยว</strong>
+                      ประเมินผลกระทบ-เสียหายภาคท่องเที่ยว แนวทาง-มาตรการรักษาจัดการท่องเที่ยวที่ยืดหยุ่น พัฒนาระบบเตือนภัย เพิ่มความตระหนัก-มีส่วนร่วมในการอนุรักษ์แหล่งท่องเที่ยว-มรดกทางวัฒนธรรม
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A5" value="A5" required><span class="chip-label">A5</span>
+                    <span class="tooltip-box">
+                      <strong>A5: การสาธารณสุข</strong>
+                      องค์ความรู้-ความเสี่ยงต่อสุขภาพ ระบบเฝ้าระวังสาธารณสุข ประเมินความเสี่ยงสุขภาพ ระบบสาธารณสุขของกลุ่มเปราะบาง ระบบประกันสุขภาพ แนวทางฟื้นฟูสุขอนามัย-คุณภาพชีวิต
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A6" value="A6" required><span class="chip-label">A6</span>
+                    <span class="tooltip-box">
+                      <strong>A6: ทรัพยากรธรรมชาติ</strong>
+                      ประเมินผลกระทบระบบนิเวศ-พืชเศรษฐกิจ-ทรัพยากรทะเลชายฝั่ง ประยุกต์ใช้ Ecosystem-based Adaptation นวัตกรรมเพื่ออนุรักษ์ พัฒนาระบบฐานข้อมูล-คาดการณ์ กลไกความร่วมมืออนุรักษ์
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A7" value="A7" required><span class="chip-label">A7</span>
+                    <span class="tooltip-box">
+                      <strong>A7: การตั้งถิ่นฐานและความมั่นคงของมนุษย์</strong>
+                      การออกแบบเมืองยืดหยุ่น พัฒนาระบบแจ้งเตือนภัยส าหรับเมือง-ชนบท แบบจำลอง Urban Climate นวัตกรรมที่สนับสนุนการพัฒนาขีดความสามารถของชุมชน ประเมินผลกระทบการโยกย้ายถิ่นอาศัย
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_A8" value="A8" required><span class="chip-label">A8</span>
+                    <span class="tooltip-box">
+                      <strong>A8: ความสูญเสียและความเสียหาย</strong>
+                      วิธีการประเมินความสูญเสีย3ความเสียหาย แนวทางการชดเชย-การเข้าถึงกองทุนเพื่อชดเชย (Loss and Damage Fund)
+                    </span>
+                  </label>
+                </div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="measure" id="measure3" value="ใช้เทคโนโลยี/นวัตกรรม">
-                <label class="form-check-label" for="measure3">ใช้เทคโนโลยี/นวัตกรรม</label>
+
+              <div class="mars-row">
+                <div><b>R: Resilience</b> (ด้านการสร้างภูมิคุ้มกันต่อการเปลี่ยนแปลงสภาพภูมิอากาศ)</div>
+                <div class="mars-options">
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R1" value="R1" required><span class="chip-label">R1</span>
+                    <span class="tooltip-box">
+                      <strong>R1: ข้อมูลและองค์ความรู้</strong>
+                      ความรู้ Climate Science พัฒนา Platform, Hazard-Risk Map แนวทางประเมินผลกระทบ, Climate Risk-Resilience Index
+                    </span>  
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R2" value="R2" required><span class="chip-label">R2</span>
+                    <span class="tooltip-box">
+                      <strong>R2: การบริหารจัดการน้ำ</strong>
+                      แผนที่ความเสี่ยง-คุณภาพน้ำ ระบบบริหารจัดการน้ำ พื้นที่น้ำท่วม-แล้งซ ้าซาก ปัญหารุกล้าของน้ำเค็ม ผลกระทบการจัดการทรัพยากรน้ำข้ามพรมแดน
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R3" value="R3" required><span class="chip-label">R3</span>
+                    <span class="tooltip-box">
+                      <strong>R3: การเกษตรและความมั่นคงทางอาหาร</strong>
+                      พัฒนาเทคโนโลยีสมัยใหม่ พื้นที่เกษตรกรรมอย่างยั่งยืน ปรับปรุงพันธุ์พืช-สัตว์ ทำ Regenerative Agriculture พัฒนาแบบจำลองการเพาะปลูก-ระบบประกันภัยทางการเกษตร
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R4" value="R4" required><span class="chip-label">R4</span>
+                    <span class="tooltip-box">
+                      <strong>R4: การท่องเที่ยว</strong>
+                      ประเมินผลกระทบ-เสียหายภาคท่องเที่ยว แนวทาง-มาตรการรักษาจัดการท่องเที่ยวที่ยืดหยุ่น พัฒนาระบบเตือนภัย เพิ่มความตระหนัก-มีส่วนร่วมในการอนุรักษ์แหล่งท่องเที่ยว-มรดกทางวัฒนธรรม
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R5" value="R5" required><span class="chip-label">R5</span>
+                    <span class="tooltip-box">
+                      <strong>R5: การสาธารณสุข</strong>
+                      องค์ความรู้-ความเสี่ยงต่อสุขภาพ ระบบเฝ้าระวังสาธารณสุข ประเมินความเสี่ยงสุขภาพ ระบบสาธารณสุขของกลุ่มเปราะบาง ระบบประกันสุขภาพ แนวทางฟื้นฟูสุขอนามัย-คุณภาพชีวิต
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R6" value="R6" required><span class="chip-label">R6</span>
+                    <span class="tooltip-box">
+                      <strong>R6: ทรัพยากรธรรมชาติ</strong>
+                      ประเมินผลกระทบระบบนิเวศ-พืชเศรษฐกิจ-ทรัพยากรทะเลชายฝั่ง ประยุกต์ใช้ Ecosystem-based Adaptation นวัตกรรมเพื่ออนุรักษ์ พัฒนาระบบฐานข้อมูล-คาดการณ์ กลไกความร่วมมืออนุรักษ์
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R7" value="R7" required><span class="chip-label">R7</span>
+                    <span class="tooltip-box">
+                      <strong>R7: การตั้งถิ่นฐานและความมั่นคงของมนุษย์</strong>
+                      การออกแบบเมืองยืดหยุ่น พัฒนาระบบแจ้งเตือนภัยส าหรับเมือง-ชนบท แบบจำลอง Urban Climate นวัตกรรมที่สนับสนุนการพัฒนาขีดความสามารถของชุมชน ประเมินผลกระทบการโยกย้ายถิ่นอาศัย
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_R8" value="R8" required><span class="chip-label">R8</span>
+                    <span class="tooltip-box">
+                      <strong>R8: ความสูญเสียและความเสียหาย</strong>
+                      วิธีการประเมินความสูญเสีย3ความเสียหาย แนวทางการชดเชย-การเข้าถึงกองทุนเพื่อชดเชย (Loss and Damage Fund)
+                    </span>
+                  </label>
+                </div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="measure" id="measure4" value="ยังไม่มีมาตรการ">
-                <label class="form-check-label" for="measure4">ยังไม่มีมาตรการ</label>
+
+              <div class="mars-row">
+                <div><b>S: System Research</b> (ด้านการวิจัยเชิงระบบ)</div>
+                <div class="mars-options">
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_S1" value="S1" required><span class="chip-label">S1</span>
+                    <span class="tooltip-box">
+                      <strong>S1: ขับเคลื่อนนโยบายสู่ภาคปฏิบัติ</strong>
+                      ออกแบบนโยบาย-แนวทางการนำนโยบายไปสู่การปฏิบัติ สร้างขีดความสามารถผู้กำหนดนโยบาย บูรณาการฐานข้อมูลการเปลี่ยนแปลงสภาพภูมิอากาศ วิเคราะห์เชิงโครงสร้าง
+                    </span>   
+                </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_S2" value="S2" required><span class="chip-label">S2</span>
+                    <span class="tooltip-box">
+                      <strong>S2: การเงิน</strong>
+                      กลไกส่งผ่านงบประมาณสู่ท้องถิ่นที่เหมาะสมสร้างแรงจูงใจ-การมีส่วนร่วม การออกแบบมาตรการ-ลงทุน-กำหนดราคาคาร์บอนที่เหมาะสม รูปแบบการประกันความเสียหายจากผลกระทบ/ภัยพิบัติ
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_S3" value="S3" required><span class="chip-label">S3</span>
+                    <span class="tooltip-box">
+                      <strong>S3: กลไกสู่สังคมคาร์บอนตำ่</strong>
+                      ใช้ความรู้-การมีส่วนร่วมท้องถิ่นในการเปลี่ยนผ่าน ผลกระทบนโยบายเปลี่ยนแปลงสภาพภูมิอากาศ-แนวปฏิบัติต่อกลุ่มรายได้น้อยกลุ่มเปราะบาง กลยุทธ์การเปลี่ยนผ่านที่ยุติธรรม-แนวทางปฏิบัติที่ดีสู่เศรษฐกิจคาร์บอนต่ำ
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_S4" value="S4" required><span class="chip-label">S4</span>
+                    <span class="tooltip-box">
+                      <strong>S4: เสริมพลังสังคม/การมีส่วนร่วม</strong>
+                      กลไกสร้างขีดความสามารถผสานรวมความรู้คนในท้องถิ่น นำความรู้-สร้างจิตสำนึกการเปลี่ยนแปลงสภาพภูมิอากาศ เสริมศักยภาพหน่วยงานรัฐ-สถาบันวิจัย-ภาคเอกชนขับเคลื่อนนโยบาย-เป้าหมายประเทศ
+                    </span>
+                  </label>
+                  <label class="mars-option">
+                    <input type="radio" name="mars" id="mars_S5" value="S5" required><span class="chip-label">S5</span>
+                    <span class="tooltip-box">
+                      <strong>S5: ภูมิปัญญา-เทคโนโลยีสมัยใหม่</strong>
+                      ประยุกต์ใช้องค์ความรู้-ภูมิปัญญาท้องถิ่นในการขับเคลื่อน ใช้เทคโนโลยีติดตามสถานภาพการดำเนินงาน-ประมวลผล-ตัดสินใจ
+                    </span>
+                  </label>
+                </div>
               </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="measureDetail">อื่น ๆ (โปรดระบุ)</label>
-              <textarea class="form-control" id="measureDetail" name="measureDetail" data-label="มาตรการอื่น ๆ" rows="3"></textarea>
             </div>
           </div>
 
-          <!-- Step 5: Research utilization -->
+          <!-- Step 5: Target Areas -->
           <div class="tab-pane fade" data-step-pane="5">
-            <h3 class="pane-title">5. การใช้ประโยชน์จากงานวิจัย/องค์ความรู้</h3>
-            <div class="mb-3">
-              <label class="form-label mb-2 d-block">ท่านเคยนำองค์ความรู้จากงานวิจัยไปใช้ประโยชน์หรือไม่</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="research" id="research1" value="เคย" data-label="เคยใช้ประโยชน์งานวิจัย">
-                <label class="form-check-label" for="research1">เคย</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="research" id="research2" value="ไม่เคย">
-                <label class="form-check-label" for="research2">ไม่เคย</label>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="researchDetail">หากเคย โปรดระบุองค์ความรู้/โครงการที่นำไปใช้</label>
-              <textarea class="form-control" id="researchDetail" name="researchDetail" data-label="องค์ความรู้ที่นำไปใช้" rows="3"></textarea>
-            </div>
-          </div>
+            <h3 class="pane-title">5. พื้นที่เป้าหมายหรือได้รับประโยชน์</h3>
 
-          <!-- Step 6: Suggestions -->
-          <div class="tab-pane fade" data-step-pane="6">
-            <h3 class="pane-title">6. ข้อเสนอแนะและความต้องการ</h3>
-            <div class="mb-3">
-              <label class="form-label" for="needs">ท่านต้องการองค์ความรู้หรือการสนับสนุนด้านใดเพิ่มเติม</label>
-              <textarea class="form-control" id="needs" name="needs" data-label="ความต้องการ" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="suggestion">ข้อเสนอแนะอื่น ๆ</label>
-              <textarea class="form-control" id="suggestion" name="suggestion" data-label="ข้อเสนอแนะ" rows="3"></textarea>
-            </div>
-          </div>
+            <div class="local-resource-grid mt-4">
+              <div class="row lr-header d-none d-md-flex">
+                <div class="col-md-1">ลำดับ</div>
+                <div class="col-md-3">จังหวัด</div>
+                <div class="col-md-2">Node</div>
+                <div class="col-md-2">Region</div>
+                <div class="col-md-4">Local-based Resources</div>
+              </div>
 
-          <!-- Step 7: Review & confirm -->
-          <div class="tab-pane fade" data-step-pane="7">
-            <h3 class="pane-title">7. ตรวจสอบและยืนยันข้อมูล</h3>
-            <p class="text-muted">กรุณาตรวจสอบความถูกต้องของข้อมูลก่อนกดยืนยัน</p>
-            <div id="reviewSummary" class="review-summary"></div>
-            <div class="form-check mt-3">
-              <input class="form-check-input" type="checkbox" id="confirmCheck" required>
-              <label class="form-check-label" for="confirmCheck">ข้าพเจ้ายืนยันว่าข้อมูลที่กรอกถูกต้อง</label>
+              <datalist id="thProvinces">
+                <option value="กรุงเทพมหานคร"><option value="กระบี่"><option value="กาญจนบุรี"><option value="กาฬสินธุ์"><option value="กำแพงเพชร">
+                <option value="ขอนแก่น">
+                <option value="จันทบุรี">
+                <option value="ฉะเชิงเทรา">
+                <option value="ชลบุรี"><option value="ชัยนาท"><option value="ชัยภูมิ"><option value="ชุมพร">
+                <option value="เชียงราย"><option value="เชียงใหม่">
+                <option value="ตรัง"><option value="ตราด"><option value="ตาก">
+                <option value="นครนายก"><option value="นครปฐม"><option value="นครพนม"><option value="นครราชสีมา"><option value="นครศรีธรรมราช"><option value="นครสวรรค์"><option value="นนทบุรี"><option value="นราธิวาส"><option value="น่าน">
+                <option value="บึงกาฬ"><option value="บุรีรัมย์">
+                <option value="ปทุมธานี"><option value="ประจวบคีรีขันธ์"><option value="ปราจีนบุรี"><option value="ปัตตานี">
+                <option value="พระนครศรีอยุธยา"><option value="พังงา"><option value="พัทลุง"><option value="พิจิตร"><option value="พิษณุโลก"><option value="เพชรบุรี"><option value="เพชรบูรณ์"><option value="แพร่"><option value="พะเยา">
+                <option value="ภูเก็ต">
+                <option value="มหาสารคาม"><option value="มุกดาหาร"><option value="แม่ฮ่องสอน">
+                <option value="ยโสธร"><option value="ยะลา">
+                <option value="ร้อยเอ็ด"><option value="ระนอง"><option value="ระยอง"><option value="ราชบุรี">
+                <option value="ลพบุรี"><option value="ลำปาง"><option value="ลำพูน"><option value="เลย">
+                <option value="ศรีสะเกษ">
+                <option value="สกลนคร"><option value="สงขลา"><option value="สตูล"><option value="สมุทรปราการ"><option value="สมุทรสงคราม"><option value="สมุทรสาคร"><option value="สระแก้ว"><option value="สระบุรี"><option value="สิงห์บุรี"><option value="สุโขทัย"><option value="สุพรรณบุรี"><option value="สุราษฎร์ธานี"><option value="สุรินทร์">
+                <option value="หนองคาย"><option value="หนองบัวลำภู">
+                <option value="อ่างทอง"><option value="อำนาจเจริญ"><option value="อุดรธานี"><option value="อุตรดิตถ์"><option value="อุทัยธานี"><option value="อุบลราชธานี">
+              </datalist>
+
+              <div class="lr-body">
+                <div class="row lr-row">
+                  <div class="col-12 col-md-1">
+                    <span class="lr-mobile-label d-md-none">ลำดับ</span>
+                    <div class="order-cell">1</div>
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <span class="lr-mobile-label d-md-none">จังหวัด</span>
+                    <input type="text" class="form-control" list="thProvinces" name="lr_province_1" data-label="จังหวัด (ลำดับ 1)" placeholder="พิมพ์ชื่อจังหวัด..." data-enables="#lr_chips_1">
+                  </div>
+                  <div class="col-12 col-md-1">
+                    <span class="lr-mobile-label d-md-none">Node</span>
+                    <input type="text" class="form-control" name="lr_node_1" data-label="Node (ลำดับ 1)" disabled>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <span class="lr-mobile-label d-md-none">Region</span>
+                    <input type="text" class="form-control" name="lr_region_text_1" data-label="Region (ลำดับ 1)" disabled>
+                  </div>
+                  <div class="col-12 col-md-5">
+                    <span class="lr-mobile-label d-md-none">Local-based Resources</span>
+                    <div class="mars-options" id="lr_chips_1">
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_1" value="L1" data-label="Local-based Resources (ลำดับ 1)" disabled><span class="chip-label">L1</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_1" value="L2" disabled><span class="chip-label">L2</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_1" value="L3" disabled><span class="chip-label">L3</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_1" value="L4" disabled><span class="chip-label">L4</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_1" value="L5" disabled><span class="chip-label">L5</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_1" value="L6" disabled><span class="chip-label">L6</span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row lr-row">
+                  <div class="col-12 col-md-1">
+                    <span class="lr-mobile-label d-md-none">ลำดับ</span>
+                    <div class="order-cell">2</div>
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <span class="lr-mobile-label d-md-none">จังหวัด</span>
+                    <input type="text" class="form-control" list="thProvinces" name="lr_province_2" data-label="จังหวัด (ลำดับ 2)" placeholder="พิมพ์ชื่อจังหวัด..." data-enables="#lr_chips_2">
+                  </div>
+                  <div class="col-12 col-md-1">
+                    <span class="lr-mobile-label d-md-none">Node</span>
+                    <input type="text" class="form-control" name="lr_node_2" data-label="Node (ลำดับ 2)" disabled>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <span class="lr-mobile-label d-md-none">Region</span>
+                    <input type="text" class="form-control" name="lr_region_text_2" data-label="Region (ลำดับ 2)" disabled>
+                  </div>
+                  <div class="col-12 col-md-5">
+                    <span class="lr-mobile-label d-md-none">Local-based Resources</span>
+                    <div class="mars-options" id="lr_chips_2">
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_2" value="L1" data-label="Local-based Resources (ลำดับ 2)" disabled><span class="chip-label">L1</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_2" value="L2" disabled><span class="chip-label">L2</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_2" value="L3" disabled><span class="chip-label">L3</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_2" value="L4" disabled><span class="chip-label">L4</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_2" value="L5" disabled><span class="chip-label">L5</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_2" value="L6" disabled><span class="chip-label">L6</span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row lr-row">
+                  <div class="col-12 col-md-1">
+                    <span class="lr-mobile-label d-md-none">ลำดับ</span>
+                    <div class="order-cell">3</div>
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <span class="lr-mobile-label d-md-none">จังหวัด</span>
+                    <input type="text" class="form-control" list="thProvinces" name="lr_province_3" data-label="จังหวัด (ลำดับ 3)" placeholder="พิมพ์ชื่อจังหวัด..." data-enables="#lr_chips_3">
+                  </div>
+                  <div class="col-12 col-md-1">
+                    <span class="lr-mobile-label d-md-none">Node</span>
+                    <input type="text" class="form-control" name="lr_node_3" data-label="Node (ลำดับ 3)" disabled>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <span class="lr-mobile-label d-md-none">Region</span>
+                    <input type="text" class="form-control" name="lr_region_text_3" data-label="Region (ลำดับ 3)" disabled>
+                  </div>
+                  <div class="col-12 col-md-5">
+                    <span class="lr-mobile-label d-md-none">Local-based Resources</span>
+                    <div class="mars-options" id="lr_chips_3">
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_3" value="L1" data-label="Local-based Resources (ลำดับ 3)" disabled><span class="chip-label">L1</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_3" value="L2" disabled><span class="chip-label">L2</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_3" value="L3" disabled><span class="chip-label">L3</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_3" value="L4" disabled><span class="chip-label">L4</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_3" value="L5" disabled><span class="chip-label">L5</span></label>
+                      <label class="mars-option"><input type="checkbox" name="lr_chip_3" value="L6" disabled><span class="chip-label">L6</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div id="successMsg" class="alert alert-success mt-3 d-none">
-              <i class="fas fa-check-circle"></i> ขอบคุณสำหรับการตอบแบบสอบถาม!
+            <hr>
+            <div class="mars-grid">
+              <div class="mars-row">
+                <div><b>Local-based Resources Description</b></div>
+                <div class="mars-options">
+                  <span class="chip-tip" tabindex="0">
+                    <div class="chip-label">L1</div>
+                    <span class="tooltip-box tooltip-box-wide">
+                      <strong>L1: ทรัพยากรด้านสถาบันการศึกษาและภูมิปัญญาท้องถิ่น (Institutional &amp; Knowledge Resource)</strong>
+                      <span>เช่น</span>
+                      <div class="tooltip-columns">
+                        <ul>
+                          <li>คณะ/ภาควิชาที่เกี่ยวข้องกับ Climate</li>
+                          <li>นักวิจัยด้าน GHG/ภัยพิบัติ/เกษตร</li>
+                          <li>หลักสูตรด้านสิ่งแวดล้อม</li>
+                          <li>ศูนย์วิจัย/ศูนย์บริการวิชาการ</li>
+                          <li>ห้องปฏิบัติการ/เครื่องมือวัด</li>
+                          <li>โรงเรียนเครือข่าย ACE</li>
+                          <li>สถานีวิจัยหรือศูนย์วิจัยเฉพาะทางในพื้นที่</li>
+                        </ul>
+                        <ul>
+                          <li>คนเฒ่าคนแก่หรือหมอยาพื้นบ้าน</li>
+                          <li>พิพิธภัณฑ์ชุมชนหรือศูนย์เรียนรู้ธรรมชาติ</li>
+                          <li>ศูนย์เรียนรู้การเพิ่มประสิทธิภาพการผลิตสินค้าเกษตร (ศพก.)</li>
+                          <li>ปราชญ์ชาวบ้านด้านการจัดการน้ำ</li>
+                          <li>ครูผู้สอนวิชาวิทยาศาสตร์และเกษตรในท้องถิ่น</li>
+                          <li>อุทยานวิทยาศาสตร์ภูมิภาค</li>
+                        </ul>
+                      </div>
+                    </span>
+                  </span>
+                  <span class="chip-tip" tabindex="0">
+                    <div class="chip-label">L2</div>
+                    <span class="tooltip-box tooltip-box-wide">
+                      <strong>L2: ทรัพยากรด้านเศรษฐกิจพื้นที่ (Economic Resource)</strong>
+                      <span>เช่น</span>
+                      <div class="tooltip-columns">
+                        <ul>
+                          <li>พื้นที่อุตสาหกรรม</li>
+                          <li>เขตเศรษฐกิจพิเศษ</li>
+                          <li>พื้นที่เกษตรกรรมขนาดใหญ่</li>
+                          <li>เมืองท่องเที่ยว</li>
+                          <li>เครือข่ายการท่องเที่ยวเชิงนิเวศ (Eco-tourism)</li>
+                          <li>สหกรณ์การเกษตร</li>
+                          <li>ธุรกิจ SMEs ในพื้นที่</li>
+                          <li>กลุ่มออมทรัพย์เพื่อการผลิต</li>
+                        </ul>
+                        <ul>
+                          <li>ผลิตภัณฑ์เด่น (Local Products)</li>
+                          <li>บริการ: โฮมสเตย์ การนำเที่ยวเชิงนิเวศ</li>
+                          <li>ตลาดนัดชุมชน/ตลาดสีเขียว (Green Market)</li>
+                          <li>กองทุนหมู่บ้านและชุมชนเมือง</li>
+                          <li>วิสาหกิจชุมชนด้านพลังงานทดแทน</li>
+                          <li>บริษัท ประชารัฐรักสามัคคีประจำจังหวัด</li>
+                        </ul>
+                      </div>
+                    </span>
+                  </span>
+                  <span class="chip-tip" tabindex="0">
+                    <div class="chip-label">L3</div>
+                    <span class="tooltip-box tooltip-box-wide">
+                      <strong>L3: ทรัพยากรด้านภูมิศาสตร์และสิ่งแวดล้อม (Geography &amp; Environment Resource)</strong>
+                      <span>เช่น</span>
+                      <div class="tooltip-columns">
+                        <ul>
+                          <li>พื้นที่เสี่ยงน้ำท่วม</li>
+                          <li>พื้นที่เสี่ยงภัยแล้ง</li>
+                          <li>พื้นที่ชายฝั่ง</li>
+                          <li>ป่าไม้/พื้นที่คาร์บอนสูง</li>
+                          <li>ทรัพยากรน้ำ: แม่น้ำ ลำคลอง น้ำตก แหล่งน้ำบาดาล</li>
+                          <li>ทรัพยากรชีวภาพ: ป่าไม้ ป่าชายเลน สัตว์ท้องถิ่น พืชสมุนไพร</li>
+                          <li>ทัศนียภาพ: วิวทิวทัศน์ ภูเขา หรือชายหาดที่สวยงาม</li>
+                        </ul>
+                        <ul>
+                          <li>พื้นที่ป่าพรุ (Peatlands)/พื้นที่ชุ่มน้ำ (Wetlands)</li>
+                          <li>แก้มลิง หรือ หนองน้ำสาธารณะของชุมชน</li>
+                          <li>ภูเขาขยะ/บ่อฝังกลบขยะของเทศบาล: พื้นที่ที่มีศักยภาพในการปรับปรุงเป็นโครงการดักจับก๊าซมีเทนหรือผลิตพลังงานจากขยะ (Waste-to-Energy)</li>
+                          <li>ป่าในเมือง (Urban Forest) หรือ พื้นที่สีเขียวสาธารณะ</li>
+                        </ul>
+                      </div>
+                    </span>
+                  </span>
+                  <span class="chip-tip" tabindex="0">
+                    <div class="chip-label">L4</div>
+                    <span class="tooltip-box tooltip-box-wide">
+                      <strong>L4: ทรัพยากรด้านเครือข่าย (Network Resource)</strong>
+                      <span>เช่น</span>
+                      <div class="tooltip-columns">
+                        <ul>
+                          <li>เครือข่าย อปท.</li>
+                          <li>มี NGO เข้มแข็ง</li>
+                          <li>มีความร่วมมือกับภาคเอกชน</li>
+                          <li>คณะกรรมการป่าชุมชน</li>
+                          <li>กลุ่มอนุรักษ์ทรัพยากรชายฝั่งและประมงพื้นบ้าน</li>
+                          <li>เครือข่าย อปพร.</li>
+                          <li>หอการค้าจังหวัด/สภาอุตสาหกรรมจังหวัด</li>
+                          <li>กลุ่มผู้ใช้น้ำ/คณะกรรมการบริหารจัดการน้ำชุมชน</li>
+                        </ul>
+                        <ul>
+                          <li>เครือข่าย ทสม.</li>
+                          <li>กลุ่มสตรีและแม่บ้าน</li>
+                          <li>ไกด์ชุมชน/มัคคุเทศก์ท้องถิ่น</li>
+                          <li>เครือข่ายศิษย์เก่าโรงเรียนในชุมชน</li>
+                          <li>สภาเด็กและเยาวชนระดับตำบล/อำเภอ/จังหวัด</li>
+                          <li>กลุ่มอาสาสมัครสาธารณสุขประจำหมู่บ้าน (อสม.)</li>
+                          <li>ชมรมผู้สูงอายุ</li>
+                        </ul>
+                      </div>
+                    </span>
+                  </span>
+                  <span class="chip-tip" tabindex="0">
+                    <div class="chip-label">L5</div>
+                    <span class="tooltip-box tooltip-box-wide">
+                      <strong>L5: ทรัพยากรด้านข้อมูล (Platform Resource)</strong>
+                      <span>เช่น</span>
+                      <div class="tooltip-columns">
+                        <ul>
+                          <li>ฐานข้อมูล GHG จังหวัด</li>
+                          <li>มี Dashboard, Open Data</li>
+                          <li>ระบบเก็บข้อมูลภัยพิบัติ</li>
+                          <li>ระบบแพลตฟอร์มวิเคราะห์</li>
+                          <li>ภาพถ่ายดาวเทียมระดับพื้นที่</li>
+                          <li>แอปพลิเคชันหรือแพลตฟอร์ม Citizen Science</li>
+                          <li>สถานีตรวจวัดคุณภาพอากาศและน้ำขนาดเล็ก</li>
+                        </ul>
+                        <ul>
+                          <li>ทะเบียนข้อมูลครัวเรือนเปราะบางของ อปท.</li>
+                          <li>หอกระจายข่าวประจำหมู่บ้าน/เสียงตามสาย</li>
+                          <li>กลุ่ม LINE Official หรือ Facebook Page ของชุมชน/อำเภอ</li>
+                          <li>ระบบภูมิสารสนเทศ (GIS) ของ อบจ. หรือเทศบาล</li>
+                          <li>ศูนย์ข้อมูลน้ำระดับจังหวัด</li>
+                        </ul>
+                      </div>
+                    </span>
+                  </span>
+                  <span class="chip-tip" tabindex="0">
+                    <div class="chip-label">L6</div>
+                    <span class="tooltip-box tooltip-box-wide">
+                      <strong>L6: ทรัพยากรด้านผู้นำและวัฒนธรรมองค์กร (Leadership &amp; Culture Resource)</strong>
+                      <span>เช่น</span>
+                      <div class="tooltip-columns">
+                        <ul>
+                          <li>ผู้บริหารสนับสนุน Climate</li>
+                          <li>มีนโยบาย Green Campus</li>
+                          <li>มีวัฒนธรรมองค์กรที่เข้มแข็ง</li>
+                          <li>มีประสบการณ์ทำโครงการระดับชาติ</li>
+                          <li>ผู้นำศาสนา: ศูนย์รวมจิตใจที่สามารถใช้กุศโลบายทางศาสนาเพื่อส่งเสริมการอนุรักษ์สิ่งแวดล้อม (เช่น การบวชป่า การทำบุญด้วยขยะรีไซเคิล)</li>
+                        </ul>
+                        <ul>
+                          <li>ธรรมนูญชุมชน/กติกาหมู่บ้าน: กฎระเบียบทางสังคมที่ชุมชนตั้งขึ้นมาเองและบังคับใช้กันเอง เช่น กติกาปรับเงินหากจับได้ว่าเผาป่า ทำประมงในฤดูวางไข่</li>
+                          <li>กำนัน/ผู้ใหญ่บ้านนักพัฒนา: ผู้นำท้องที่ที่มีวิสัยทัศน์และมีอิทธิพลในการโน้มน้าวให้ลูกบ้านเปลี่ยนพฤติกรรม</li>
+                          <li>นโยบาย "จังหวัดสะอาด" หรือ "เมืองคาร์บอนต่ำ"</li>
+                        </ul>
+                      </div>
+                    </span>
+                  </span>
+                </div>
+              </div>
             </div>
+
           </div>
 
         </div>

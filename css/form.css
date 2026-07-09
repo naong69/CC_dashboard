@@ -139,6 +139,219 @@
 .review-label { color: #777; flex: 0 0 45%; }
 .review-value { color: var(--navy); font-weight: 500; text-align: right; flex: 1; word-break: break-word; }
 
+/* ---------- Info tooltip icon ---------- */
+.info-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  color: var(--accent-dark);
+  cursor: help;
+  position: relative;
+  outline: none;
+  vertical-align: middle;
+}
+.info-tip i { font-size: 20px; }
+
+.tooltip-box {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  bottom: calc(100% + 10px);
+  left: 0;
+  width: 300px;
+  max-width: 80vw;
+  background: var(--accent-dark);
+  color: #fff;
+  font-size: 12.5px;
+  line-height: 1.6;
+  padding: 10px 12px;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  white-space: normal;
+  text-align: left;
+  font-weight: 400;
+}
+.tooltip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  border: 6px solid transparent;
+  border-top-color: var(--accent-dark);
+}
+.tooltip-box strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.info-tip:hover .tooltip-box,
+.info-tip:focus .tooltip-box,
+.info-tip:focus-within .tooltip-box {
+  display: block;
+}
+
+/* Hoverable wrapper for a static (non-interactive) chip that carries a tooltip */
+.chip-tip {
+  display: inline-flex;
+  position: relative;
+  cursor: help;
+  outline: none;
+}
+.chip-tip:hover .tooltip-box,
+.chip-tip:focus .tooltip-box,
+.chip-tip:focus-within .tooltip-box {
+  display: block;
+}
+
+.tooltip-box.tooltip-box-wide {
+  width: 460px;
+  max-width: 85vw;
+}
+.tooltip-columns {
+  display: flex;
+  gap: 16px;
+}
+.tooltip-columns ul {
+  flex: 1;
+  margin: 0;
+  padding-left: 16px;
+}
+.tooltip-columns li { margin-bottom: 4px; }
+
+@media (max-width: 600px) {
+  .tooltip-box { width: 240px; left: -110px; }
+  .tooltip-box::after { left: 120px; }
+  .tooltip-box.tooltip-box-wide { width: 260px; }
+  .tooltip-columns { flex-direction: column; gap: 0; }
+}
+
+/* ---------- MARS radio grid ---------- */
+.mars-grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.mars-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.mars-row:first-child { border-radius: 6px 6px 0 0; }
+.mars-row:last-child { border-bottom: none; border-radius: 0 0 6px 6px; }
+.mars-row:nth-child(odd) { background: #fafafa; }
+
+.mars-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 8px 20px;
+  flex: 1;
+  padding-top: 5px;
+}
+.mars-option {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+}
+.mars-option input[type="radio"],
+.mars-option input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.chip-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.mars-option:hover .chip-label { border-color: var(--accent); }
+.mars-option input:checked + .chip-label {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.mars-option input:focus-visible + .chip-label {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
+.mars-option input:disabled + .chip-label {
+  opacity: .45;
+  cursor: not-allowed;
+  background: #f2f2f2;
+}
+.mars-option:has(input:disabled) { cursor: not-allowed; }
+.mars-option:hover .tooltip-box,
+.mars-option:focus-within .tooltip-box {
+  display: block;
+}
+
+/* ---------- Local resource grid ---------- */
+.local-resource-grid {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lr-header {
+  margin: 0;
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 8px;
+}
+.lr-header > div { padding: 4px 8px; }
+
+.lr-row {
+  margin: 0;
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  row-gap: 10px;
+}
+.lr-row:last-child { border-bottom: none; }
+.lr-body .lr-row:nth-child(odd) { background: #fafafa; }
+.lr-row > [class*="col-"] { padding: 6px 8px; }
+
+.lr-mobile-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.local-resource-grid .order-cell {
+  text-align: center;
+  font-weight: 700;
+  color: var(--navy);
+}
+.local-resource-grid select,
+.local-resource-grid input[type="text"] {
+  width: 100%;
+}
+.local-resource-grid .mars-options { gap: 6px 10px; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
   .form-card { padding: 16px; }
@@ -148,6 +361,9 @@
 
   .wizard-actions { flex-direction: column-reverse; gap: 10px; }
   .wizard-actions .btn { width: 100%; }
+
+  .mars-row { flex-direction: column; gap: 8px; }
+  .mars-options { gap: 8px 14px; padding-top: 0; }
 
   .review-row { flex-direction: column; gap: 2px; }
   .review-value { text-align: left; }
