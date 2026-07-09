@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แบบสอบถาม | CC Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/form.css" />
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div id="topbar">
+    <div class="topbar-inner">
+      <form id="search-form" class="search-form" onsubmit="return false;">
+        <input type="text" placeholder="กรอกคำค้นหา แล้วกด Enter" />
+      </form>
+      <div class="topbar-login"><a href="#">สำหรับเจ้าหน้าที่</a></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="img/logo.png" alt="Logo" class="brand-mark" />
+        <span class="brand-title">Climate NETCAP Dashboard</span>
+      </div>
+
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="main-nav" class="main-nav">
+        <ul class="nav-menu">
+          <li><a href="index.html">แผนที่</a></li>
+          <li><a href="form.html" class="active">WH Question Form</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page title -->
+  <section id="page-title">
+    <div class="page-title-inner">
+      <h1>ACE: Action for Climate Empowerment</h1>
+      <h2>ข้อมูลโครงการที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ</h2>
+      <hr>
+      <p class="lead">กรุณากรอกข้อมูลให้ครบถ้วนในแต่ละขั้นตอน แล้วกด "ถัดไป" เพื่อดำเนินการต่อ</p>
+    </div>
+  </section>
+
+  <!-- Wizard -->
+  <main id="form-section">
+    <div class="form-card">
+
+      <!-- Step indicator -->
+      <ol class="step-indicator" id="stepIndicator">
+        <li class="step active" data-step="1">
+          <span class="step-num">1</span>
+          <span class="step-label">ข้อมูลโครงการ</span>
+        </li>
+        <li class="step" data-step="2">
+          <span class="step-num">2</span>
+          <span class="step-label">กลุ่มเป้าหมาย</span>
+        </li>
+        <li class="step" data-step="3">
+          <span class="step-num">3</span>
+          <span class="step-label">การดำเนินการ</span>
+        </li>
+        <li class="step" data-step="4">
+          <span class="step-num">4</span>
+          <span class="step-label">ความสำคัญ</span>
+        </li>
+        <li class="step" data-step="5">
+          <span class="step-num">5</span>
+          <span class="step-label">พื้นที่ดำเนินโครงการ</span>
+        </li>
+        <li class="step" data-step="6">
+          <span class="step-num">6</span>
+          <span class="step-label">ข้อเสนอแนะ</span>
+        </li>
+        <li class="step" data-step="7">
+          <span class="step-num">7</span>
+          <span class="step-label">ตรวจสอบ &amp; ยืนยัน</span>
+        </li>
+      </ol>
+
+      <form id="surveyForm" novalidate>
+        <div class="tab-content">
+
+          <!-- Step 1: Respondent info -->
+          <div class="tab-pane fade show active" data-step-pane="1">
+            <h3 class="pane-title">1. ข้อมูลโครงการ</h3>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="project_name">ชื่อโครงการ <span class="req">*</span></label>
+                <input type="text" class="form-control" id="project_name" name="project_name" data-label="ชื่อโครงการ" required>
+              </div>
+
+               <div class="col-md-6 mb-3">
+                <label class="form-label" for="email">อีเมล <span class="req">*</span></label>
+                <input type="email" class="form-control" id="email" name="email" data-label="อีเมล" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label d-block">ปีที่ดำเนินโครงการ <span class="req">*</span></label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" name="project_year" id="year2565" value="2565" data-label="ปีที่ดำเนินโครงการ" required>
+                  <label class="form-check-label" for="year2565">2565</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" name="project_year" id="year2566" value="2566" required>
+                  <label class="form-check-label" for="year2566">2566</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" name="project_year" id="year2567" value="2567" required>
+                  <label class="form-check-label" for="year2567">2567</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" name="project_year" id="year2568" value="2568" required>
+                  <label class="form-check-label" for="year2568">2568</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" name="project_year" id="year2569" value="2569" required>
+                  <label class="form-check-label" for="year2569">2569</label>
+                </div>
+                <div class="form-text">สามารถเลือกหลายปี หากเป็นโครงการต่อเนื่อง</div>
+              </div>
+             
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="phone">เบอร์โทรศัพท์</label>
+                <input type="tel" class="form-control" id="phone" name="phone" data-label="เบอร์โทรศัพท์">
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Organization -->
+          <div class="tab-pane fade" data-step-pane="2">
+            <h3 class="pane-title">2. ข้อมูลหน่วยงาน</h3>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="orgname">ชื่อหน่วยงาน/องค์กร <span class="req">*</span></label>
+                <input type="text" class="form-control" id="orgname" name="orgname" data-label="ชื่อหน่วยงาน" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="region">ภูมิภาค <span class="req">*</span></label>
+                <select class="form-select" id="region" name="region" data-label="ภูมิภาค" required>
+                  <option value="" selected disabled>-- เลือกภูมิภาค --</option>
+                  <option>ภาคเหนือ</option>
+                  <option>ภาคกลาง</option>
+                  <option>ภาคตะวันออกเฉียงเหนือ</option>
+                  <option>ภาคใต้</option>
+                </select>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label mb-2 d-block">ประเภทหน่วยงาน</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="orgtype" id="orgtype1" value="ภาครัฐ" data-label="ประเภทหน่วยงาน">
+                  <label class="form-check-label" for="orgtype1">ภาครัฐ</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="orgtype" id="orgtype2" value="ภาคเอกชน">
+                  <label class="form-check-label" for="orgtype2">ภาคเอกชน</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="orgtype" id="orgtype3" value="ชุมชน/ประชาสังคม">
+                  <label class="form-check-label" for="orgtype3">ชุมชน/ประชาสังคม</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Climate impacts -->
+          <div class="tab-pane fade" data-step-pane="3">
+            <h3 class="pane-title">3. ผลกระทบจากการเปลี่ยนแปลงสภาพภูมิอากาศ</h3>
+            <div class="mb-3">
+              <label class="form-label mb-2 d-block">พื้นที่ของท่านได้รับผลกระทบด้านใดบ้าง (เลือกได้มากกว่า 1 ข้อ)</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="impact" id="impact1" value="ภัยแล้ง" data-label="ผลกระทบที่ได้รับ">
+                <label class="form-check-label" for="impact1">ภัยแล้ง</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="impact" id="impact2" value="น้ำท่วม">
+                <label class="form-check-label" for="impact2">น้ำท่วม</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="impact" id="impact3" value="อุณหภูมิสูงขึ้น">
+                <label class="form-check-label" for="impact3">อุณหภูมิสูงขึ้น</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="impact" id="impact4" value="ผลผลิตทางการเกษตรลดลง">
+                <label class="form-check-label" for="impact4">ผลผลิตทางการเกษตรลดลง</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="impactDetail">รายละเอียดเพิ่มเติม</label>
+              <textarea class="form-control" id="impactDetail" name="impactDetail" data-label="รายละเอียดผลกระทบ" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 4: Adaptation measures -->
+          <div class="tab-pane fade" data-step-pane="4">
+            <h3 class="pane-title">4. มาตรการปรับตัว/รับมือ</h3>
+            <div class="mb-3">
+              <label class="form-label mb-2 d-block">ท่านหรือหน่วยงานของท่านมีมาตรการรับมือใดบ้าง</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="measure" id="measure1" value="บริหารจัดการน้ำ" data-label="มาตรการรับมือ">
+                <label class="form-check-label" for="measure1">บริหารจัดการน้ำ</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="measure" id="measure2" value="ปรับเปลี่ยนพันธุ์พืช/สัตว์">
+                <label class="form-check-label" for="measure2">ปรับเปลี่ยนพันธุ์พืช/สัตว์</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="measure" id="measure3" value="ใช้เทคโนโลยี/นวัตกรรม">
+                <label class="form-check-label" for="measure3">ใช้เทคโนโลยี/นวัตกรรม</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="measure" id="measure4" value="ยังไม่มีมาตรการ">
+                <label class="form-check-label" for="measure4">ยังไม่มีมาตรการ</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="measureDetail">อื่น ๆ (โปรดระบุ)</label>
+              <textarea class="form-control" id="measureDetail" name="measureDetail" data-label="มาตรการอื่น ๆ" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 5: Research utilization -->
+          <div class="tab-pane fade" data-step-pane="5">
+            <h3 class="pane-title">5. การใช้ประโยชน์จากงานวิจัย/องค์ความรู้</h3>
+            <div class="mb-3">
+              <label class="form-label mb-2 d-block">ท่านเคยนำองค์ความรู้จากงานวิจัยไปใช้ประโยชน์หรือไม่</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="research" id="research1" value="เคย" data-label="เคยใช้ประโยชน์งานวิจัย">
+                <label class="form-check-label" for="research1">เคย</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="research" id="research2" value="ไม่เคย">
+                <label class="form-check-label" for="research2">ไม่เคย</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="researchDetail">หากเคย โปรดระบุองค์ความรู้/โครงการที่นำไปใช้</label>
+              <textarea class="form-control" id="researchDetail" name="researchDetail" data-label="องค์ความรู้ที่นำไปใช้" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 6: Suggestions -->
+          <div class="tab-pane fade" data-step-pane="6">
+            <h3 class="pane-title">6. ข้อเสนอแนะและความต้องการ</h3>
+            <div class="mb-3">
+              <label class="form-label" for="needs">ท่านต้องการองค์ความรู้หรือการสนับสนุนด้านใดเพิ่มเติม</label>
+              <textarea class="form-control" id="needs" name="needs" data-label="ความต้องการ" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="suggestion">ข้อเสนอแนะอื่น ๆ</label>
+              <textarea class="form-control" id="suggestion" name="suggestion" data-label="ข้อเสนอแนะ" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 7: Review & confirm -->
+          <div class="tab-pane fade" data-step-pane="7">
+            <h3 class="pane-title">7. ตรวจสอบและยืนยันข้อมูล</h3>
+            <p class="text-muted">กรุณาตรวจสอบความถูกต้องของข้อมูลก่อนกดยืนยัน</p>
+            <div id="reviewSummary" class="review-summary"></div>
+            <div class="form-check mt-3">
+              <input class="form-check-input" type="checkbox" id="confirmCheck" required>
+              <label class="form-check-label" for="confirmCheck">ข้าพเจ้ายืนยันว่าข้อมูลที่กรอกถูกต้อง</label>
+            </div>
+            <div id="successMsg" class="alert alert-success mt-3 d-none">
+              <i class="fas fa-check-circle"></i> ขอบคุณสำหรับการตอบแบบสอบถาม!
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Wizard actions -->
+        <div class="wizard-actions">
+          <button type="button" id="backBtn" class="btn btn-outline-secondary" disabled>
+            <i class="fas fa-arrow-left"></i> ย้อนกลับ
+          </button>
+          <button type="button" id="nextBtn" class="btn btn-brand">
+            ถัดไป <i class="fas fa-arrow-right"></i>
+          </button>
+          <button type="submit" id="finishBtn" class="btn btn-brand d-none">
+            <i class="fas fa-check"></i> เสร็จสิ้น
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="brand-mark light">CC</span>
+        <p>
+          Climate NETCAP Dashboard<br/>
+          ระบบแดชบอร์ดแสดงข้อมูลเชิงพื้นที่และสถิติ
+        </p>
+        <div class="social-icons">
+          <a href="#" title="Facebook">FB</a>
+          <a href="#" title="Twitter">TW</a>
+          <a href="#" title="Youtube">YT</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>ติดต่อ</h3>
+        <ul class="contact-info">
+          <li>ที่อยู่ตัวอย่าง</li>
+          <li>โทร. 0-0000-0000</li>
+          <li>email@example.com</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div id="copyright">
+    <div class="copyright-inner">
+      <p class="copyright-text">สงวนลิขสิทธิ์ © 2026</p>
+      <ul class="footer-menu">
+        <li><a href="index.html">แผนที่</a></li>
+        <li><a href="form.html">WH Question Form</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/form.js"></script>
+</body>
+</html>
