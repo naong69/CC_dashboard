@@ -228,14 +228,14 @@
   .tooltip-columns { flex-direction: column; gap: 0; }
 }
 
-/* ---------- MARS radio grid ---------- */
-.mars-grid {
+/* ---------- MARS radio grid (panel 4) / Local-resource chip grid (panel 5) ---------- */
+.mars-grid, .lr-chipgrid {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
   border-radius: 6px;
 }
-.mars-row {
+.mars-row, .lr-chiprow {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -243,11 +243,11 @@
   padding: 12px 14px;
   border-bottom: 1px solid var(--border);
 }
-.mars-row:first-child { border-radius: 6px 6px 0 0; }
-.mars-row:last-child { border-bottom: none; border-radius: 0 0 6px 6px; }
-.mars-row:nth-child(odd) { background: #fafafa; }
+.mars-row:first-child, .lr-chiprow:first-child { border-radius: 6px 6px 0 0; }
+.mars-row:last-child, .lr-chiprow:last-child { border-bottom: none; border-radius: 0 0 6px 6px; }
+.mars-row:nth-child(odd), .lr-chiprow:nth-child(odd) { background: #fafafa; }
 
-.mars-options {
+.mars-options, .lr-chipoptions {
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -255,7 +255,7 @@
   flex: 1;
   padding-top: 5px;
 }
-.mars-option {
+.mars-option, .lr-chipoption {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -263,7 +263,9 @@
   position: relative;
 }
 .mars-option input[type="radio"],
-.mars-option input[type="checkbox"] {
+.mars-option input[type="checkbox"],
+.lr-chipoption input[type="radio"],
+.lr-chipoption input[type="checkbox"] {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -285,24 +287,24 @@
   font-weight: 600;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-.mars-option:hover .chip-label { border-color: var(--accent); }
-.mars-option input:checked + .chip-label {
+.mars-option:hover .chip-label, .lr-chipoption:hover .chip-label { border-color: var(--accent); }
+.mars-option input:checked + .chip-label, .lr-chipoption input:checked + .chip-label {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
 }
-.mars-option input:focus-visible + .chip-label {
+.mars-option input:focus-visible + .chip-label, .lr-chipoption input:focus-visible + .chip-label {
   outline: 2px solid var(--accent-dark);
   outline-offset: 2px;
 }
-.mars-option input:disabled + .chip-label {
+.mars-option input:disabled + .chip-label, .lr-chipoption input:disabled + .chip-label {
   opacity: .45;
   cursor: not-allowed;
   background: #f2f2f2;
 }
-.mars-option:has(input:disabled) { cursor: not-allowed; }
-.mars-option:hover .tooltip-box,
-.mars-option:focus-within .tooltip-box {
+.mars-option:has(input:disabled), .lr-chipoption:has(input:disabled) { cursor: not-allowed; }
+.mars-option:hover .tooltip-box, .lr-chipoption:hover .tooltip-box,
+.mars-option:focus-within .tooltip-box, .lr-chipoption:focus-within .tooltip-box {
   display: block;
 }
 
@@ -350,7 +352,14 @@
 .local-resource-grid input[type="text"] {
   width: 100%;
 }
-.local-resource-grid .mars-options { gap: 6px 10px; }
+.local-resource-grid .lr-chipoptions { gap: 6px 10px; }
+
+.lr-row-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.lr-row-actions .btn:disabled { opacity: .4; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
@@ -362,8 +371,8 @@
   .wizard-actions { flex-direction: column-reverse; gap: 10px; }
   .wizard-actions .btn { width: 100%; }
 
-  .mars-row { flex-direction: column; gap: 8px; }
-  .mars-options { gap: 8px 14px; padding-top: 0; }
+  .mars-row, .lr-chiprow { flex-direction: column; gap: 8px; }
+  .mars-options, .lr-chipoptions { gap: 8px 14px; padding-top: 0; }
 
   .review-row { flex-direction: column; gap: 2px; }
   .review-value { text-align: left; }

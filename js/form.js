@@ -68,23 +68,119 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Text field -> checkbox group: enable the group's checkboxes only once the field has a value.
-  function setupProvinceGatedGroups() {
-    form.querySelectorAll('[data-enables]').forEach(trigger => {
-      const group = form.querySelector(trigger.dataset.enables);
-      if (!group) return;
-      const boxes = Array.from(group.querySelectorAll('input[type="checkbox"]'));
+  function wireProvinceGate(trigger) {
+    const group = document.querySelector(trigger.dataset.enables);
+    if (!group) return;
+    const boxes = Array.from(group.querySelectorAll('input[type="checkbox"]'));
 
-      const sync = () => {
-        const hasValue = trigger.value.trim() !== '';
-        boxes.forEach(b => {
-          b.disabled = !hasValue;
-          if (!hasValue) b.checked = false;
+    const sync = () => {
+      const hasValue = trigger.value.trim() !== '';
+      boxes.forEach(b => {
+        b.disabled = !hasValue;
+        if (!hasValue) b.checked = false;
+      });
+    };
+    trigger.addEventListener('input', sync);
+    trigger.addEventListener('change', sync);
+    sync();
+  }
+
+  function setupProvinceGatedGroups() {
+    form.querySelectorAll('[data-enables]').forEach(wireProvinceGate);
+  }
+
+  // Panel 5's province table: "+" clones the last row (renumbered), "-" removes it (min 1 row).
+  function setupLocalResourceRows() {
+    const grid = document.querySelector('.local-resource-grid');
+    const body = grid ? grid.querySelector('.lr-body') : null;
+    const addBtn = document.getElementById('lrAddRow');
+    const removeBtn = document.getElementById('lrRemoveRow');
+    if (!grid || !body || !addBtn || !removeBtn) return;
+
+    const getRows = () => Array.from(body.querySelectorAll(':scope > .row.lr-row'));
+
+    function renumberRow(rowEl, oldNum, newNum) {
+      const orderCell = rowEl.querySelector('.order-cell');
+      if (orderCell) orderCell.textContent = String(newNum);
+
+      const pattern = new RegExp(`(_|ลำดับ )${oldNum}(?!\\d)`, 'g');
+      rowEl.querySelectorAll('[name], [id], [data-label], [data-enables]').forEach(el => {
+        ['name', 'id', 'data-label', 'data-enables'].forEach(attr => {
+          if (!el.hasAttribute(attr)) return;
+          const val = el.getAttribute(attr);
+          const updated = val.replace(pattern, `$1${newNum}`);
+          if (updated !== val) el.setAttribute(attr, updated);
         });
-      };
-      trigger.addEventListener('input', sync);
-      trigger.addEventListener('change', sync);
-      sync();
+      });
+    }
+
+    function updateButtons() {
+      removeBtn.disabled = getRows().length <= 1;
+    }
+
+    addBtn.addEventListener('click', () => {
+      const rows = getRows();
+      const oldNum = rows.length;
+      const newNum = oldNum + 1;
+      const newRow = rows[rows.length - 1].cloneNode(true);
+
+      newRow.querySelectorAll('input[type="text"]').forEach(i => { i.value = ''; });
+      newRow.querySelectorAll('input[type="checkbox"]').forEach(c => { c.checked = false; c.disabled = true; });
+
+      renumberRow(newRow, oldNum, newNum);
+      body.appendChild(newRow);
+
+      const trigger = newRow.querySelector('[data-enables]');
+      if (trigger) wireProvinceGate(trigger);
+
+      updateButtons();
     });
+
+    removeBtn.addEventListener('click', () => {
+      const rows = getRows();
+      if (rows.length <= 1) return;
+      rows[rows.length - 1].remove();
+      updateButtons();
+    });
+
+    updateButtons();
+  }
+
+  // On Finish: at least one row must have a province, and every row that has
+  // a province must also have at least one Local-based Resource chip checked.
+  function validateLocalResourceRows() {
+    const grid = document.querySelector('.local-resource-grid');
+    if (!grid) return true;
+
+    const rows = Array.from(grid.querySelectorAll('.lr-body > .row.lr-row'));
+    const rowsWithProvince = rows.filter(row => {
+      const province = row.querySelector('input[name^="lr_province_"]');
+      return province && province.value.trim() !== '';
+    });
+
+    if (rowsWithProvince.length === 0) {
+      const firstProvince = rows[0]?.querySelector('input[name^="lr_province_"]');
+      if (firstProvince) {
+        firstProvince.setCustomValidity('กรุณาเลือกจังหวัดอย่างน้อย 1 แถว');
+        firstProvince.reportValidity();
+        firstProvince.addEventListener('input', () => firstProvince.setCustomValidity(''), { once: true });
+      }
+      return false;
+    }
+
+    for (const row of rowsWithProvince) {
+      if (row.querySelectorAll('input[type="checkbox"]:checked').length > 0) continue;
+
+      const firstChip = row.querySelector('input[type="checkbox"]');
+      if (firstChip) {
+        firstChip.setCustomValidity('กรุณาเลือก Local-based Resources อย่างน้อย 1 รายการสำหรับแถวที่เลือกจังหวัดแล้ว');
+        firstChip.reportValidity();
+        firstChip.addEventListener('change', () => firstChip.setCustomValidity(''), { once: true });
+      }
+      return false;
+    }
+
+    return true;
   }
 
   function validateCurrentPane() {
@@ -149,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!validateCurrentPane()) return;
+    if (!validateLocalResourceRows()) return;
 
     document.getElementById('successMsg').classList.remove('d-none');
     finishBtn.disabled = true;
@@ -157,5 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupRequiredCheckboxGroups();
   setupConditionalFields();
   setupProvinceGatedGroups();
+  setupLocalResourceRows();
   showStep(1);
 });

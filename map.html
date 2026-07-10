@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CC Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style-switcher.css" />
+  <link rel="stylesheet" href="css/scw-switcher.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Highcharts via CDN -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+</head>
+<body>
+
+  <!-- Top bar: logo + search + login -->
+  <div id="topbar">
+    <div class="topbar-inner">
+      <form id="search-form" class="search-form" onsubmit="return false;">
+        <input type="text" placeholder="กรอกคำค้นหา แล้วกด Enter" />
+      </form>
+      <div class="topbar-login"><a href="#">สำหรับเจ้าหน้าที่</a></div>
+    </div>
+  </div>
+
+  <!-- Header: logo + main nav -->
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="img/logo.png" alt="Logo" class="brand-mark" />
+        <span class="brand-title">Climate NETCAP Dashboard</span>
+      </div>
+
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="main-nav" class="main-nav">
+        <ul class="nav-menu">
+          <li><a href="index.html">หน้าแรก</a></li>
+          <li><a href="map.html" class="active">แผนที่</a></li>
+          <li><a href="form.html">WH Question Form</a></li>
+          <!-- 
+          <li><a href="#">การใช้ประโยชน์</a></li>
+          <li><a href="#">โครงการ</a></li>
+          <li><a href="#">ฐานข้อมูล</a></li>
+          <li class="dropdown">
+            <a href="#">ติดตามโครงการ <span class="caret">▾</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">ผลการติดตามและประเมินผล</a></li>
+              <li><a href="#">เข้าสู่ระบบประเมินผลโครงการ</a></li>
+            </ul>
+          </li>
+        -->
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page title -->
+  <section id="page-title">
+    <div class="page-title-inner">
+      <h2>แผนที่และข้อมูลการเปลี่ยนแปลงสภาพภูมิอากาศ</h2>
+      <hr>
+      <p class="lead">ภาพรวมข้อมูลเชิงพื้นที่และสถิติที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศในแต่ละภูมิภาคของประเทศ</p>
+    </div>
+  </section>
+
+  <!-- Main content / map area -->
+  <main id="map-section">
+    <div id="chart-container" class="map-container"></div>
+  </main>
+
+  <!-- Floating left-edge panel: layer switcher (exact structure/classes from dkmmap's style-switcher) -->
+  <div id="layerSwitcher" class="style-switcher">
+    <a id="layerSwitcherToggle" class="style-switcher-open" href="#switcher"><i class="fas fa-cogs"></i></a>
+    <div class="style-switcher-wrap">
+      <h3 style="text-align:center;color:#ffffff;">แสดงข้อมูลเชิงพื้นที่</h3>
+      <div class="map-manu-widget">
+        <ul class="nav nav-tabs nav-stacked switcher-tabs">
+          <li class="active" data-layer="km"><a href="javascript:void(0)">องค์ความรู้</a></li>
+          <li data-layer="entrepreneur"><a href="javascript:void(0)">กลุ่มเกษตรกร/วิสาหกิจชุมชน</a></li>
+          <li data-layer="rc"><a href="javascript:void(0)">เครือข่ายวิจัยภูมิภาค</a></li>
+          <li data-layer="cbr"><a href="javascript:void(0)">การวิจัยเพื่อท้องถิ่น</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating right-edge panel: chart / legend (exact structure/classes from dkmmap's scw-switcher-wrap) -->
+  <div id="chartSwitcher" class="scw-switcher-wrap">
+    <button id="chartSwitcherToggle" type="button" class="scw-trigger-icon scw-trigger" title="แสดงกราฟ">
+      <i class="fas fa-chart-pie"></i>
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="widget">
+      <div id="legend-km" class="legend-content active">
+        <div class="placeholder-chart">กราฟวงกลม: จำนวนแยกตามภูมิภาค</div>
+        <div class="placeholder-chart">กราฟแท่ง: จำนวนแยกตามกลุ่ม</div>
+      </div>
+      <div id="legend-entrepreneur" class="legend-content">
+        <div class="placeholder-chart">กราฟวงกลม: กลุ่มเกษตรกร/วิสาหกิจชุมชน แยกตามภูมิภาค</div>
+      </div>
+      <div id="legend-rc" class="legend-content">
+        <h2>เครือข่ายวิจัยภูมิภาคและศูนย์วิจัยชุมชน</h2>
+        <p>ข้อมูลเครือข่ายวิจัยภูมิภาคทั้ง 4 ภูมิภาคและศูนย์วิจัยชุมชน</p>
+      </div>
+      <div id="legend-cbr" class="legend-content">
+        <h2>การวิจัยเพื่อท้องถิ่น</h2>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-toggle">+ ภาคเหนือ</button>
+            <div class="accordion-body">
+              <ul><li>ศูนย์ประสานงานวิจัยเพื่อท้องถิ่น จ.น่าน</li></ul>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-toggle">+ ภาคกลาง</button>
+            <div class="accordion-body">
+              <ul><li>ศูนย์ประสานงานวิจัยเพื่อท้องถิ่น จ.เลย</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="brand-mark light">CC</span>
+        <p>
+          Climate NETCAP Dashboard<br/>
+          ระบบแดชบอร์ดแสดงข้อมูลเชิงพื้นที่และสถิติ
+        </p>
+        <div class="social-icons">
+          <a href="#" title="Facebook">FB</a>
+          <a href="#" title="Twitter">TW</a>
+          <a href="#" title="Youtube">YT</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>ติดต่อ</h3>
+        <ul class="contact-info">
+          <li>ที่อยู่ตัวอย่าง</li>
+          <li>โทร. 0-0000-0000</li>
+          <li>email@example.com</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div id="copyright">
+    <div class="copyright-inner">
+      <p class="copyright-text">สงวนลิขสิทธิ์ © 2026</p>
+      <ul class="footer-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="map.html">แผนที่</a></li>
+        <li><a href="form.html">WH Question Form</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="js/sheets.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/layout.js"></script>
+</body>
+</html>
