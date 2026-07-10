@@ -62,11 +62,11 @@
       <ol class="step-indicator" id="stepIndicator">
         <li class="step active" data-step="1">
           <span class="step-num">1</span>
-          <span class="step-label">ข้อมูลโครงการ</span>
+          <span class="step-label">Project</span>
         </li>
         <li class="step" data-step="2">
           <span class="step-num">2</span>
-          <span class="step-label">กลุ่มเป้าหมาย</span>
+          <span class="step-label">Target Groups</span>
         </li>
         <li class="step" data-step="3">
           <span class="step-num">3</span>
@@ -78,7 +78,7 @@
         </li>
         <li class="step" data-step="5">
           <span class="step-num">5</span>
-          <span class="step-label">พื้นที่ดำเนินโครงการ</span>
+          <span class="step-label">Target Areas</span>
         </li>
       </ol>
 
@@ -479,8 +479,8 @@
               <div class="row lr-header d-none d-md-flex">
                 <div class="col-md-1">ลำดับ</div>
                 <div class="col-md-3">จังหวัด</div>
-                <div class="col-md-2">Node</div>
-                <div class="col-md-2">Region</div>
+                <div class="col-md-1">Node</div>
+                <div class="col-md-3">Region</div>
                 <div class="col-md-4">Local-based Resources</div>
               </div>
 
@@ -521,11 +521,11 @@
                     <span class="lr-mobile-label d-md-none">Node</span>
                     <input type="text" class="form-control" name="lr_node_1" data-label="Node (ลำดับ 1)" disabled>
                   </div>
-                  <div class="col-12 col-md-2">
+                  <div class="col-12 col-md-3">
                     <span class="lr-mobile-label d-md-none">Region</span>
                     <input type="text" class="form-control" name="lr_region_text_1" data-label="Region (ลำดับ 1)" disabled>
                   </div>
-                  <div class="col-12 col-md-5">
+                  <div class="col-12 col-md-4">
                     <span class="lr-mobile-label d-md-none">Local-based Resources</span>
                     <div class="lr-chipoptions" id="lr_chips_1">
                       <label class="lr-chipoption"><input type="checkbox" name="lr_chip_1" value="L1" data-label="Local-based Resources (ลำดับ 1)" disabled><span class="chip-label">L1</span></label>
@@ -551,11 +551,11 @@
                     <span class="lr-mobile-label d-md-none">Node</span>
                     <input type="text" class="form-control" name="lr_node_2" data-label="Node (ลำดับ 2)" disabled>
                   </div>
-                  <div class="col-12 col-md-2">
+                  <div class="col-12 col-md-3">
                     <span class="lr-mobile-label d-md-none">Region</span>
                     <input type="text" class="form-control" name="lr_region_text_2" data-label="Region (ลำดับ 2)" disabled>
                   </div>
-                  <div class="col-12 col-md-5">
+                  <div class="col-12 col-md-4">
                     <span class="lr-mobile-label d-md-none">Local-based Resources</span>
                     <div class="lr-chipoptions" id="lr_chips_2">
                       <label class="lr-chipoption"><input type="checkbox" name="lr_chip_2" value="L1" data-label="Local-based Resources (ลำดับ 2)" disabled><span class="chip-label">L1</span></label>
@@ -581,11 +581,11 @@
                     <span class="lr-mobile-label d-md-none">Node</span>
                     <input type="text" class="form-control" name="lr_node_3" data-label="Node (ลำดับ 3)" disabled>
                   </div>
-                  <div class="col-12 col-md-2">
+                  <div class="col-12 col-md-3">
                     <span class="lr-mobile-label d-md-none">Region</span>
                     <input type="text" class="form-control" name="lr_region_text_3" data-label="Region (ลำดับ 3)" disabled>
                   </div>
-                  <div class="col-12 col-md-5">
+                  <div class="col-12 col-md-4">
                     <span class="lr-mobile-label d-md-none">Local-based Resources</span>
                     <div class="lr-chipoptions" id="lr_chips_3">
                       <label class="lr-chipoption"><input type="checkbox" name="lr_chip_3" value="L1" data-label="Local-based Resources (ลำดับ 3)" disabled><span class="chip-label">L1</span></label>
@@ -772,6 +772,8 @@
 
         </div>
 
+        <div id="submitStatus" class="alert d-none mt-3" role="status"></div>
+
         <!-- Wizard actions -->
         <div class="wizard-actions">
           <button type="button" id="backBtn" class="btn btn-outline-secondary" disabled>
@@ -824,6 +826,13 @@
       </ul>
     </div>
   </div>
+
+  <!-- Cross-origin submission target: a real form POST to this hidden iframe isn't
+       subject to CORS the way fetch()/XHR is, which sidesteps Apps Script's CORS quirks. -->
+  <iframe name="gasSubmitFrame" style="display:none"></iframe>
+  <form id="gasSubmitForm" method="POST" target="gasSubmitFrame" style="display:none">
+    <input type="hidden" name="payload" id="gasPayloadInput">
+  </form>
 
   <script src="js/layout.js"></script>
   <script src="js/form.js"></script>
