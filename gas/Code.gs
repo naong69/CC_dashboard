@@ -52,8 +52,22 @@ function doPost(e) {
   }
 }
 
-// Simple health check: open the Web App URL in a browser to confirm the deployment is live.
+// GET /exec               -> health check (open the Web App URL in a browser to confirm it's live)
+// GET /exec?action=read   -> returns { submission, project_year, target_area } row arrays
 function doGet(e) {
+  if (e.parameter && e.parameter.action === 'read') {
+    try {
+      const ss = SpreadsheetApp.openById(SHEET_ID);
+      return jsonResponse_({
+        status: 'success',
+        submission: getSheet_(ss, 'Submission').getDataRange().getValues(),
+        project_year: getSheet_(ss, 'Project_Year').getDataRange().getValues(),
+        target_area: getSheet_(ss, 'Target_Area').getDataRange().getValues(),
+      });
+    } catch (err) {
+      return jsonResponse_({ status: 'error', message: err.message });
+    }
+  }
   return jsonResponse_({ status: 'ok', message: 'Form submission endpoint is running.' });
 }
 

@@ -47,24 +47,89 @@
     <div class="page-title-inner">
       <h2>Climate NETCAP Dashboard</h2>
       <hr>
-      <p class="lead">ระบบแดชบอร์ดแสดงข้อมูลเชิงพื้นที่และสถิติที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ</p>
+      <p class="lead">ข้อมูลเชิงพื้นที่สถิติโครงการที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ</p>
     </div>
   </section>
 
   <!-- Home / quick links -->
-  <main id="home-section">
-    <h3 class="home-heading">เมนูหลัก</h3>
-    <div class="home-grid">
-      <a href="map.html" class="home-card">
-        <i class="fas fa-map-marked-alt"></i>
-        <h4>แผนที่</h4>
-        <p>ดูแผนที่และข้อมูลเชิงพื้นที่ด้านการเปลี่ยนแปลงสภาพภูมิอากาศ</p>
-      </a>
-      <a href="form.html" class="home-card">
-        <i class="fas fa-file-alt"></i>
-        <h4>WH Question Form</h4>
-        <p>กรอกแบบสอบถามข้อมูลโครงการที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ</p>
-      </a>
+  <main id="project-section">
+    <h3 class="project-heading">โครงการ</h3>
+    <div class="project-grid">
+      <div class="project-row">
+        <div class="col col-4 stat-tile">
+          <i class="fas fa-diagram-project"></i>
+          <div class="stat-number" id="projectCountStat">52</div>
+          <div class="stat-label">โครงการ</div>
+          <div class="stat-sublabel">ในปีงบประมาณ</div>
+          <div class="stat-sublabel" id="projectYearRangeStat">2565 - 2569</div>
+        </div>
+        <div class="col col-8">
+          <div id="project-linechart-container"></div>
+        </div>
+      </div>
+      <div class="project-row region-stats-row">
+        <div class="stat-tile region-tile">
+          <button type="button" class="region-badge" data-region="ภาคเหนือ">ภาคเหนือ</button>
+          <div class="stat-inline">
+            <span class="stat-number">5</span>
+            <span class="stat-label">โครงการ</span>
+          </div>
+        </div>
+        <div class="stat-tile region-tile">
+          <button type="button" class="region-badge" data-region="ภาคตะวันออกเฉียงเหนือ">ภาคอีสาน</button>
+          <div class="stat-inline">
+            <span class="stat-number">11</span>
+            <span class="stat-label">โครงการ</span>
+          </div>
+        </div>
+        <div class="stat-tile region-tile">
+          <button type="button" class="region-badge" data-region="ภาคกลาง">ภาคกลาง</button>
+          <div class="stat-inline">
+            <div class="stat-number">14</div>
+            <div class="stat-label">โครงการ</div>
+          </div>
+        </div>
+        <div class="stat-tile region-tile">
+          <button type="button" class="region-badge" data-region="ภาคตะวันออก">ภาคตะวันออก</button>
+          <div class="stat-inline">
+            <span class="stat-number">3</span>
+            <span class="stat-label">โครงการ</span>
+          </div>
+        </div>
+        <div class="stat-tile region-tile">
+          <button type="button" class="region-badge" data-region="ภาคตะวันตก">ภาคตะวันตก</button>
+          <div class="stat-inline">
+            <span class="stat-number">13</span>
+            <span class="stat-label">โครงการ</span>
+          </div>
+        </div>
+        <div class="stat-tile region-tile">
+          <button type="button" class="region-badge" data-region="ภาคใต้">ภาคใต้</button>
+          <div class="stat-inline">
+            <span class="stat-number">13</span>
+            <span class="stat-label">โครงการ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 class="netcap-heading">NETCAP & Target Groups</h3>
+    <div class="netcap-grid">
+      <div class="netcap-row">
+        <div class="col col-8">
+          <div id="netcap-barchart-container"></div>
+        </div>
+        <div class="col col-4">
+          <div id="3p-piechart-container"></div>
+        </div>
+      </div>
+    </div>
+    <h3 class="mars-heading">MARS</h3>
+    <div class="mars-grid">
+      <div class="mars-row">
+        <div class="col col-8">
+          <div id="mars-pie-donut-chart-container"></div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -75,7 +140,7 @@
         <span class="brand-mark light">CC</span>
         <p>
           Climate NETCAP Dashboard<br/>
-          ระบบแดชบอร์ดแสดงข้อมูลเชิงพื้นที่และสถิติ
+          แดชบอร์ดแสดงข้อมูลเชิงพื้นที่และสถิติ
         </p>
         <div class="social-icons">
           <a href="#" title="Facebook">FB</a>
@@ -105,6 +170,10 @@
     </div>
   </div>
 
-  <script src="js/layout.js"></script>
+  <!--<script src="js/layout.js"></script>-->
+  <script src="js/sheet.js"></script>
+  <script src="js/data-transform.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="js/ui-chart.js"></script>
 </body>
 </html>
