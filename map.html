@@ -85,8 +85,8 @@
       <h3 style="text-align:center;color:#ffffff;">แสดงข้อมูลเชิงพื้นที่</h3>
       <div class="map-manu-widget">
         <ul class="nav nav-tabs nav-stacked switcher-tabs">
-          <li class="active" data-layer="km"><a href="javascript:void(0)"><b>โครงการ</b></a></li>
-          <li data-layer="entrepreneur"><a href="javascript:void(0)"><b>NETCAP</b></a></li>
+          <li class="active" data-layer="project"><a href="javascript:void(0)"><b>โครงการ</b></a></li>
+          <li data-layer="netcap"><a href="javascript:void(0)"><b>ClimateNETCAP</b></a></li>
           <li data-layer="rc"><a href="javascript:void(0)"><b>MARS</b></a></li>
           <li data-layer="cbr"><a href="javascript:void(0)"><b>Local-based Resource</b></a></li>
         </ul>
@@ -102,12 +102,13 @@
     </button>
 
     <div class="widget">
-      <div id="legend-km" class="legend-content active">
-        <div id="region-piechart-container">กราฟวงกลม: จำนวนแยกตามภูมิภาค</div>
-        <div id="node-barchart-container">กราฟแท่ง: จำนวนแยกตามกลุ่ม</div>
+      <div id="legend-project" class="legend-content active">
+        <div id="project-region-piechart-container">กราฟวงกลม: จำนวนโครงการแยกตามภูมิภาค</div>
+        <div id="project-node-barchart-container">กราฟแท่ง: จำนวนโครงการแยกตาม node</div>
       </div>
-      <div id="legend-entrepreneur" class="legend-content">
-        <div class="placeholder-chart">กราฟวงกลม: กลุ่มเกษตรกร/วิสาหกิจชุมชน แยกตามภูมิภาค</div>
+      <div id="legend-netcap" class="legend-content">
+        <div id="netcap-region-piechart-container">กราฟวงกลม: จำนวน netcap แยกตามภูมิภาค</div>
+        <div id="netcap-node-barchart-container">กราฟแท่ง: จำนวน netcap แยกตาม node</div>
       </div>
       <div id="legend-rc" class="legend-content">
         <h2>เครือข่ายวิจัยภูมิภาคและศูนย์วิจัยชุมชน</h2>

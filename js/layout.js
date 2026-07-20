@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Layer tab switching (mirrors DKMmap's showMap())
   const MAP_CONTAINER_BY_LAYER = {
-    km: 'map-project-container',
-    entrepreneur: 'map-netcap-container',
+    project: 'map-project-container',
+    netcap: 'map-netcap-container',
     rc: 'map-mars-container',
     cbr: 'map-local-container'
   };

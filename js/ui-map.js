@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const thailand_node_line = await fetch('./data/thailand_node_lines.geojson').then(response => response.json());
   const thailand_region_line = await fetch('./data/thailand_region_lines.geojson').then(response => response.json());
   
-
-  
   function renderProjectCountMap() {
     const mapContainer = document.getElementById('map-project-container');
     if (!mapContainer || !thailand_province) return;
@@ -95,85 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // ---------- NETCAP sum by province (thematic map) ----------
-  // Reads the [{ name, N, E, T, C, A, P, sum }, ...] prepared by js/data-transform.js's
-  // getNETCAPCountByProvince() (and its accompanying max "sum") out of localStorage
-  // and renders them as a colorAxis-scaled choropleth over the province polygons,
-  // same structure as renderProjectCountMap but colored by the NETCAP "sum" field.
-  function renderNETCAPCountMap() {
-    const mapContainer = document.getElementById('map-netcap-container');
-    if (!mapContainer || !thailand_province) return;
-
-    const provinceCounts = JSON.parse(localStorage.getItem('NETCAPCountByProvince') || 'null') || [];
-    var max_netcap_count_province = Number(localStorage.getItem('NETCAPCountByProvinceMax')) || 0;
-    max_netcap_count_province = Math.ceil(max_netcap_count_province / 10, 0) * 10;
-
-    try {
-      Highcharts.mapChart('map-netcap-container', {
-        chart: {
-          map: thailand_province,
-          backgroundColor: '#ffffff',
-          borderWidth: 0.5,
-          borderColor: '#0ffd1f',
-          style: { fontFamily: 'Prompt, sans-serif' }
-        },
-        title: {
-          text: 'จำนวนกิจกรรม AEC: NETCAP แยกตามจังหวัด',
-          style: { color: navy }
-        },
-        mapNavigation: {
-          enabled: false,
-          enableMouseWheelZoom: false,
-          enableDoubleClickZoom: false,
-          enableTouchZoom: false
-        },
-        colorAxis: {
-          min: 0,
-          max: max_netcap_count_province,
-          minColor: '#E8F5E9',
-          maxColor: '#299a2d'
-        },
-        legend: {
-          enabled: true,
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle',
-          itemStyle: { color: navy }
-        },
-        tooltip: {
-          backgroundColor: '#ffffff',
-          pointFormat: '{point.name}: <b>{point.sum}</b><br>N:{point.N} E:{point.E} T:{point.T} C:{point.C} A:{point.A} P:{point.P}',
-          style: { color: navy }
-        },
-        credits: { enabled: false },
-        accessibility: { enabled: false },
-        series: [{
-          name: 'AEC Activities in',
-          data: provinceCounts,
-          joinBy: ['PRO_NAME_T', 'name'],
-          colorKey: 'sum',
-          zIndex: 1,
-          states: {
-            hover: { color: '#29602b' }
-          }
-        }, {
-          type: 'mapline',
-          data: Highcharts.geojson(thailand_node_line, 'mapline'),
-          lineWidth: 1.5,
-          zIndex: 4,
-        }, {
-          type: 'mapline',
-          data: Highcharts.geojson(thailand_region_line, 'mapline'),
-          lineWidth: 3,
-          color: '#ffffff',
-          zIndex: 5,
-        }]
-      });
-    } catch (err) {
-      console.error('map-netcap-container failed to render:', err);
-    }
-  }
-
   // ---------- Project count by region (pie) ----------
   // Reads the region -> count map prepared by js/data-transform.js's
   // getProjectCountByRegion() out of localStorage and renders it as a pie, styled
@@ -188,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   ];
 
   function renderProjectCountRegionChart() {
-    const regionContainer = document.getElementById('region-piechart-container');
+    const regionContainer = document.getElementById('project-region-piechart-container');
     if (!regionContainer) return;
 
     const regionCounts = JSON.parse(localStorage.getItem('projectCountByRegion') || 'null') || {};
@@ -197,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const yearRange = prepared ? `${prepared.minYear} - ${prepared.maxYear}` : '';
 
     try {
-      Highcharts.chart('region-piechart-container', {
+      Highcharts.chart('project-region-piechart-container', {
         chart: {
           type: 'pie',
           backgroundColor: '#ffffff',
@@ -263,6 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+
   // ---------- Project count by node (bar) ----------
   // Reads the { N0: n, ..., N16: n } map prepared by js/data-transform.js's
   // getProjectCountByNode() out of localStorage and renders it as a bar chart,
@@ -270,21 +190,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   const NODE_LIST = Array.from({ length: 17 }, (_, i) => `N${i}`); // N0..N16
 
   function renderProjectCountNodeChart() {
-    const nodeContainer = document.getElementById('node-barchart-container');
+    const nodeContainer = document.getElementById('project-node-barchart-container');
     if (!nodeContainer) return;
 
     const nodeCounts = JSON.parse(localStorage.getItem('projectCountByNode') || 'null') || {};
 
     try {
-      Highcharts.chart('node-barchart-container', {
+      Highcharts.chart('project-node-barchart-container', {
         chart: {
           type: 'bar',
           backgroundColor: '#ffffff',
           style: { fontFamily: 'Prompt, sans-serif' },
-          height: 400
+          height: 500
         },
         title: {
-          text: 'จำนวนโครงการแยกตาม Node',
+          text: 'แยกตาม Node',
           style: { color: navy }
         },
         xAxis: {
@@ -333,22 +253,288 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+
+  // ---------- NETCAP sum by province (thematic map) ----------
+  // Reads the [{ name, N, E, T, C, A, P, sum }, ...] prepared by js/data-transform.js's
+  // getNETCAPCountByProvince() (and its accompanying max "sum") out of localStorage
+  // and renders them as a colorAxis-scaled choropleth over the province polygons,
+  // same structure as renderProjectCountMap but colored by the NETCAP "sum" field.
+  function renderNETCAPCountMap() {
+    const mapContainer = document.getElementById('map-netcap-container');
+    if (!mapContainer || !thailand_province) return;
+
+    const provinceCounts = JSON.parse(localStorage.getItem('NETCAPCountByProvince') || 'null') || [];
+    var max_netcap_count_province = Number(localStorage.getItem('NETCAPCountByProvinceMax')) || 0;
+    max_netcap_count_province = Math.ceil(max_netcap_count_province / 10, 0) * 10;
+
+    try {
+      Highcharts.mapChart('map-netcap-container', {
+        chart: {
+          map: thailand_province,
+          backgroundColor: '#ffffff',
+          borderWidth: 0.5,
+          borderColor: '#0ffd1f',
+          style: { fontFamily: 'Prompt, sans-serif' }
+        },
+        title: {
+          text: 'จำนวนกิจกรรม ACE: NETCAP แยกตามจังหวัด',
+          style: { color: navy }
+        },
+        mapNavigation: {
+          enabled: false,
+          enableMouseWheelZoom: false,
+          enableDoubleClickZoom: false,
+          enableTouchZoom: false
+        },
+        colorAxis: {
+          min: 0,
+          max: max_netcap_count_province,
+          // Blue theme (matches the "ภาคตะวันออก" region pill color) so this map
+          // reads as visually distinct from the green project-count map.
+          minColor: '#E9F2FA',
+          maxColor: '#3D8EC9'
+        },
+        legend: {
+          enabled: true,
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          itemStyle: { color: navy }
+        },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          pointFormat: '{point.name}: <b>{point.sum}</b><br>N:{point.N} E:{point.E} T:{point.T} C:{point.C} A:{point.A} P:{point.P}',
+          style: { color: navy }
+        },
+        credits: { enabled: false },
+        accessibility: { enabled: false },
+        series: [{
+          name: 'AEC Activities in',
+          data: provinceCounts,
+          joinBy: ['PRO_NAME_T', 'name'],
+          colorKey: 'sum',
+          zIndex: 1,
+          states: {
+            hover: { color: '#2c6690' }
+          }
+        }, {
+          type: 'mapline',
+          data: Highcharts.geojson(thailand_node_line, 'mapline'),
+          lineWidth: 1.5,
+          zIndex: 4,
+        }, {
+          type: 'mapline',
+          data: Highcharts.geojson(thailand_region_line, 'mapline'),
+          lineWidth: 3,
+          color: '#ffffff',
+          zIndex: 5,
+        }]
+      });
+    } catch (err) {
+      console.error('map-netcap-container failed to render:', err);
+    }
+  }
+
+  
+
+  // ---------- NETCAP sum by region (pie) ----------
+  // Reads the [{ name, N, E, T, C, A, P, sum }, ...] prepared by js/data-transform.js's
+  // getNETCAPCountByProvince() (the region breakdown it also saves) out of
+  // localStorage and renders the "sum" per region as a pie, same styling as
+  // renderProjectCountRegionChart.
+  function renderNETCAPRegionChart() {
+    const regionContainer = document.getElementById('netcap-region-piechart-container');
+    if (!regionContainer) return;
+
+    const netcapByRegion = JSON.parse(localStorage.getItem('NETCAPCountByRegion') || 'null') || [];
+    const sumByRegion = {};
+    netcapByRegion.forEach(region => { sumByRegion[region.name] = region.sum; });
+
+    const prepared = JSON.parse(localStorage.getItem('projectCountByYear') || 'null');
+    const yearRange = prepared ? `${prepared.minYear} - ${prepared.maxYear}` : '';
+
+    try {
+      Highcharts.chart('netcap-region-piechart-container', {
+        chart: {
+          type: 'pie',
+          backgroundColor: '#ffffff',
+          style: { fontFamily: 'Prompt, sans-serif' },
+          height: 400
+        },
+        title: {
+          text: 'จำนวนกิจกรรม ACE: NETCAP <br>แยกตามภูมิภาค',
+          style: { color: navy }
+        },
+        subtitle: {
+            text: 'ปี ' + yearRange
+        },
+        tooltip: {
+          enabled: false
+        },
+        colors: REGION_DISPLAY.map(region => region.color),
+        credits: { enabled: false },
+        accessibility: { enabled: false },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            showInLegend: true,
+            borderColor: '#ffffff',
+            dataLabels: {
+              enabled: true,
+              distance: -40,
+              allowOverlap: true,
+              format: '{point.y}<br>({point.percentage:.1f}%)',
+              style: {
+                color: '#ffffff',
+                textOutline: 'none',
+                fontWeight: 'bold',
+                fontSize: '13px'
+              },
+              filter: {
+                property: 'percentage',
+                operator: '>',
+                value: 5
+              }
+            }
+          }
+        },
+        legend: {
+          enabled: true,
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom',
+          itemStyle: { color: navy }
+        },
+        series: [{
+          name: 'NETCAP',
+          colorByPoint: true,
+          data: REGION_DISPLAY.map(region => ({
+            name: region.name,
+            y: sumByRegion[region.key] || 0
+          }))
+        }]
+      });
+    } catch (err) {
+      console.error('netcap-region-piechart-container failed to render:', err);
+    }
+  }
+
+  // ---------- NETCAP sum by node (stacked bar) ----------
+  // Reads the [{ name, N, E, T, C, A, P, sum }, ...] prepared by js/data-transform.js's
+  // getNETCAPCountByProvince() (the node breakdown it also saves) out of localStorage
+  // and renders N/E/T/C/A/P as a stacked bar per node, ordered N0 (top) - N16 (bottom).
+  const NETCAP_COLUMNS = ['N', 'E', 'T', 'C', 'A', 'P'];
+  const NETCAP_COLORS = ['#4CAF50', '#3D8EC9', '#C97B3D', '#C9A961', '#8B6F4E', '#3DAFA0'];
+
+  function renderNETCAPCountNodeChart() {
+    const nodeContainer = document.getElementById('netcap-node-barchart-container');
+    if (!nodeContainer) return;
+
+    const netcapByNode = JSON.parse(localStorage.getItem('NETCAPCountByNode') || 'null') || [];
+    const countsByNode = {};
+    netcapByNode.forEach(node => { countsByNode[node.name] = node; });
+
+    try {
+      Highcharts.chart('netcap-node-barchart-container', {
+        chart: {
+          type: 'bar',
+          backgroundColor: '#ffffff',
+          style: { fontFamily: 'Prompt, sans-serif' },
+          height: 550
+        },
+        title: {
+          text: 'แยกตาม Node',
+          style: { color: navy }
+        },
+        xAxis: {
+          categories: NODE_LIST,
+          // Category order follows the array (N0 first), reversed so N0 renders at
+          // the top and N16 at the bottom — bar charts otherwise plot index 0 at the bottom.
+          reversed: true,
+          lineWidth: 0,
+          tickLength: 0,
+          labels: { style: { color: navy, fontWeight: 'bold' } }
+        },
+        yAxis: {
+          title: { text: null },
+          allowDecimals: false,
+          min: 0,
+          lineWidth: 0,
+          gridLineWidth: 0,
+          labels: { enabled: false },
+          // Bar charts default reversedStacks to true, which stacks the LAST series
+          // (P) closest to the axis and the FIRST (N) outermost — the opposite of
+          // series array order. false keeps N, E, T, C, A, P in that literal order.
+          reversedStacks: false,
+          // One label per bar, showing the stack's total at its outer end, instead
+          // of a dataLabel on every individual N/E/T/C/A/P segment.
+          stackLabels: {
+            enabled: true,
+            format: '{total}',
+            style: { color: navy, fontWeight: 'bold', textOutline: 'none' }
+          }
+        },
+        legend: {
+          enabled: true,
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom',
+          itemDistance: 12,
+          itemMarginTop: 0,
+          itemMarginBottom: 0,
+          itemStyle: { color: navy, fontSize: '13px' }
+        },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          pointFormat: '{series.name}: <b>{point.y}</b>',
+          style: { color: navy }
+        },
+        colors: NETCAP_COLORS,
+        credits: { enabled: false },
+        accessibility: { enabled: false },
+        plotOptions: {
+          bar: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: false
+            }
+          }
+        },
+        series: NETCAP_COLUMNS.map(col => ({
+          name: col,
+          data: NODE_LIST.map(node => (countsByNode[node] ? countsByNode[node][col] : 0))
+        }))
+      });
+    } catch (err) {
+      console.error('netcap-node-barchart-container failed to render:', err);
+    }
+  }
+
   renderProjectCountMap();
   renderNETCAPCountMap();
   renderProjectCountRegionChart();
+  renderNETCAPRegionChart();
   renderProjectCountNodeChart();
+  renderNETCAPCountNodeChart();
   window.addEventListener('ccDataPrepared', () => {
     renderProjectCountMap();
     renderNETCAPCountMap();
     renderProjectCountRegionChart();
+    renderNETCAPRegionChart();
     renderProjectCountNodeChart();
+    renderNETCAPCountNodeChart();
   });
 
   // js/layout.js dispatches this on layer-tab switch. Charts rendered into a
   // display:none container get sized to zero, so re-render whichever map just
   // became visible now that it has real dimensions.
   window.addEventListener('ccLayerShown', e => {
-    if (e.detail.layer === 'km') renderProjectCountMap();
-    if (e.detail.layer === 'entrepreneur') renderNETCAPCountMap();
+    if (e.detail.layer === 'project') renderProjectCountMap();
+    if (e.detail.layer === 'netcap') {
+      renderNETCAPCountMap();
+      renderNETCAPRegionChart();
+      renderNETCAPCountNodeChart();
+    }
   });
 });
