@@ -33,6 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Layer tab switching (mirrors DKMmap's showMap())
+  const MAP_CONTAINER_BY_LAYER = {
+    km: 'map-project-container',
+    entrepreneur: 'map-netcap-container',
+    rc: 'map-mars-container',
+    cbr: 'map-local-container'
+  };
+
   document.querySelectorAll('.switcher-tabs li').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.switcher-tabs li').forEach(t => t.classList.remove('active'));
@@ -42,6 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.legend-content').forEach(c => c.classList.remove('active'));
       const target = document.getElementById('legend-' + layer);
       if (target) target.classList.add('active');
+
+      Object.values(MAP_CONTAINER_BY_LAYER).forEach(id => {
+        const container = document.getElementById(id);
+        if (container) container.style.display = 'none';
+      });
+      const mapContainer = document.getElementById(MAP_CONTAINER_BY_LAYER[layer]);
+      if (mapContainer) mapContainer.style.display = '';
+
+      // Charts rendered into a container while it was display:none get sized to
+      // zero — let js/ui-map.js know so it can re-render now that it's visible.
+      window.dispatchEvent(new CustomEvent('ccLayerShown', { detail: { layer } }));
 
       if (chartSwitcher) chartSwitcher.classList.add('scw-switcher-open');
     });

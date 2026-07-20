@@ -42,18 +42,6 @@
           <li><a href="index.html">หน้าแรก</a></li>
           <li><a href="map.html" class="active">แผนที่</a></li>
           <li><a href="form.html">WH Question Form</a></li>
-          <!-- 
-          <li><a href="#">การใช้ประโยชน์</a></li>
-          <li><a href="#">โครงการ</a></li>
-          <li><a href="#">ฐานข้อมูล</a></li>
-          <li class="dropdown">
-            <a href="#">ติดตามโครงการ <span class="caret">▾</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">ผลการติดตามและประเมินผล</a></li>
-              <li><a href="#">เข้าสู่ระบบประเมินผลโครงการ</a></li>
-            </ul>
-          </li>
-        -->
         </ul>
       </nav>
     </div>
@@ -62,15 +50,32 @@
   <!-- Page title -->
   <section id="page-title">
     <div class="page-title-inner">
-      <h2>แผนที่และข้อมูลการเปลี่ยนแปลงสภาพภูมิอากาศ</h2>
+      <h2>แผนที่และข้อมูลที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ</h2>
       <hr>
-      <p class="lead">ภาพรวมข้อมูลเชิงพื้นที่และสถิติที่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศในแต่ละภูมิภาคของประเทศ</p>
+      <p class="lead">ภาพรวมข้อมูลเชิงพื้นที่และสถิติในแต่ละภูมิภาคของประเทศ</p>
     </div>
   </section>
-
+  <style>
+    .map-container {
+        height: 900px
+    }
+ </style>
   <!-- Main content / map area -->
   <main id="map-section">
-    <div id="chart-container" class="map-container"></div>
+    <div id="chart-container" class="map-container">
+      <div class="map-container" id="map-project-container" style="text-align: center; ">
+        Loading Map...
+      </div>
+      <div class="map-container" id="map-netcap-container" style="text-align: center; display: none;">
+        Loading Map...
+      </div>
+      <div class="map-container" id="map-mars-container" style="text-align: center; display: none;">
+        Loading Map...
+      </div>
+      <div class="map-container" id="map-local-container" style="text-align: center; display: none;">
+        Loading Map...
+      </div>
+    </div>
   </main>
 
   <!-- Floating left-edge panel: layer switcher (exact structure/classes from dkmmap's style-switcher) -->
@@ -80,10 +85,10 @@
       <h3 style="text-align:center;color:#ffffff;">แสดงข้อมูลเชิงพื้นที่</h3>
       <div class="map-manu-widget">
         <ul class="nav nav-tabs nav-stacked switcher-tabs">
-          <li class="active" data-layer="km"><a href="javascript:void(0)">องค์ความรู้</a></li>
-          <li data-layer="entrepreneur"><a href="javascript:void(0)">กลุ่มเกษตรกร/วิสาหกิจชุมชน</a></li>
-          <li data-layer="rc"><a href="javascript:void(0)">เครือข่ายวิจัยภูมิภาค</a></li>
-          <li data-layer="cbr"><a href="javascript:void(0)">การวิจัยเพื่อท้องถิ่น</a></li>
+          <li class="active" data-layer="km"><a href="javascript:void(0)"><b>โครงการ</b></a></li>
+          <li data-layer="entrepreneur"><a href="javascript:void(0)"><b>NETCAP</b></a></li>
+          <li data-layer="rc"><a href="javascript:void(0)"><b>MARS</b></a></li>
+          <li data-layer="cbr"><a href="javascript:void(0)"><b>Local-based Resource</b></a></li>
         </ul>
       </div>
     </div>
@@ -98,8 +103,8 @@
 
     <div class="widget">
       <div id="legend-km" class="legend-content active">
-        <div class="placeholder-chart">กราฟวงกลม: จำนวนแยกตามภูมิภาค</div>
-        <div class="placeholder-chart">กราฟแท่ง: จำนวนแยกตามกลุ่ม</div>
+        <div id="region-piechart-container">กราฟวงกลม: จำนวนแยกตามภูมิภาค</div>
+        <div id="node-barchart-container">กราฟแท่ง: จำนวนแยกตามกลุ่ม</div>
       </div>
       <div id="legend-entrepreneur" class="legend-content">
         <div class="placeholder-chart">กราฟวงกลม: กลุ่มเกษตรกร/วิสาหกิจชุมชน แยกตามภูมิภาค</div>
@@ -165,8 +170,8 @@
     </div>
   </div>
 
-  
-  <script src="js/charts.js"></script>
   <script src="js/layout.js"></script>
+  <script src="js/data-transform.js"></script>
+  <script src="js/ui-map.js"></script>
 </body>
 </html>
