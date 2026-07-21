@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     //console.log('Rendering project count map with', provinceCounts.length, 'province counts');
     var max_project_count_province = Number(localStorage.getItem('projectCountByProvinceMax')) || 0;
     max_project_count_province = Math.ceil(max_project_count_province / 10, 0) * 10;
+    if (max_project_count_province === 0) max_project_count_province = 10;
     //console.log('Max project count by province:', max_project_count_province);
     
     try {
@@ -271,6 +272,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const provinceCounts = JSON.parse(localStorage.getItem('NETCAPCountByProvince') || 'null') || [];
     var max_netcap_count_province = Number(localStorage.getItem('NETCAPCountByProvinceMax')) || 0;
     max_netcap_count_province = Math.ceil(max_netcap_count_province / 10, 0) * 10;
+    if (max_netcap_count_province === 0) max_netcap_count_province = 10;
 
     try {
       Highcharts.mapChart('map-netcap-container', {
@@ -830,6 +832,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const provinceCounts = JSON.parse(localStorage.getItem('LBRCountByProvince') || 'null') || [];
     var max_lbr_count_province = Number(localStorage.getItem('LBRCountByProvinceMax')) || 0;
     max_lbr_count_province = Math.ceil(max_lbr_count_province / 10, 0) * 10;
+    if (max_lbr_count_province === 0) max_lbr_count_province = 10;
 
     try {
       Highcharts.mapChart('map-local-container', {
