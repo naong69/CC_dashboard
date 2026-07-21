@@ -530,22 +530,37 @@ img.brand-mark {
   .copyright-inner { flex-direction: column; text-align: center; }
   .footer-menu { justify-content: center; flex-wrap: wrap; }
 
-  /* Layer-switcher panel: near-full-width slide-in instead of fixed 250px */
-  .style-switcher { width: 82vw; left: -82vw; }
+  /* Layer-switcher panel: narrower slide-in on small screens instead of fixed 250px.
+     left must equal -width exactly (not -100%) — .style-switcher-open (the toggle
+     cog button) is a child positioned via right:-40px relative to this panel's own
+     right edge, so it only peeks out correctly when the panel's right edge sits
+     flush at x=0. left:-100% overshoots past that and drags the toggle off-screen too. */
+  .style-switcher { width: min(260px, 75vw); left: calc(-1 * min(260px, 75vw)); }
   .style-switcher.active { left: 0; }
   .style-switcher .style-switcher-open {
     width: 40px;
     height: 40px;
     font-size: 18px;
     line-height: 40px;
-    top: 110px;
+    top: 190px;
     right: -40px;
   }
 
-  /* Chart/legend panel: cap width so it never runs off-screen */
-  .scw-switcher-wrap, .scw-trigger-icon { top: 110px; right: 12px; }
-  .scw-trigger-icon { width: 40px; height: 40px; }
+  /* Chart/legend panel: cap width so it never runs off-screen.
+     top raised from 110px to clear #page-title, whose heading can wrap onto
+     two lines at narrow widths and grow taller than that. */
+  .scw-switcher-wrap, .scw-trigger-icon { top: 190px; right: 12px; }
+  /* #site-header is position:sticky with z-index:100; on narrow screens the
+     wrapped topbar + header can grow tall enough to paint over this toggle at
+     scroll 0 unless it's raised above that. */
+  .scw-switcher-wrap { z-index: 150; }
+  .scw-trigger-icon { width: 40px; height: 40px; z-index: 151; }
   .scw-trigger-icon i { font-size: 18px; padding-top: 0; }
+  /* .scw-switcher-wrap (the container) keeps its base 50x50px + padding:23px size
+     when collapsed even though .scw-trigger-icon (the button on top of it) shrinks
+     to 40x40 here — the extra white box behind the icon is that mismatch showing
+     through. Match it to the button so nothing peeks out. */
+  .scw-switcher-wrap:not(.scw-switcher-open) { width: 40px; height: 40px; padding: 0; }
   .scw-switcher-wrap.scw-switcher-open {
     width: 90vw;
     right: 5vw;

@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             	type: 'mapline',
             	data: Highcharts.geojson(thailand_region_line, 'mapline'),
             	lineWidth: 3,
-                color: '#ffffff',
                 zIndex: 5,
                 enableMouseTracking: false,
         	}]
@@ -333,7 +332,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           type: 'mapline',
           data: Highcharts.geojson(thailand_region_line, 'mapline'),
           lineWidth: 3,
-          color: '#ffffff',
           zIndex: 5,
           enableMouseTracking: false,
         }]
@@ -620,7 +618,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           type: 'mapline',
           data: Highcharts.geojson(thailand_region_line, 'mapline'),
           lineWidth: 3,
-          color: '#ffffff',
           zIndex: 5,
           enableMouseTracking: false,
         }]
@@ -894,7 +891,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           type: 'mapline',
           data: Highcharts.geojson(thailand_region_line, 'mapline'),
           lineWidth: 3,
-          color: '#ffffff',
           zIndex: 5,
           enableMouseTracking: false,
         }]

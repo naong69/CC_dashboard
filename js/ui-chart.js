@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
           height: 500
         },
         title: {
-          text: 'ความสอดคล้องกกับกรอบและแผนงานวิจัยด้านการเปลี่ยนแปลงสภาพภูมิอากาศ (MARS)',
+          text: 'ความสอดคล้องกับกรอบและแผนงานวิจัยด้านการเปลี่ยนแปลงสภาพภูมิอากาศ (MARS)',
           style: { color: navy }
         },
         tooltip: {
