@@ -7,7 +7,10 @@ const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyE400Me1cgiMb_
 const SHEET_CACHE_KEY = 'ccSheetData';
 
 async function fetchAllSheets() {
-  const response = await fetch(`${GAS_WEB_APP_URL}?action=read`);
+  // cache: 'no-store' stops the browser itself from reusing a cached response, and
+  // the timestamp query param defeats any intermediate cache/proxy (e.g. some mobile
+  // carriers) that ignores Cache-Control entirely — every load hits the sheet fresh.
+  const response = await fetch(`${GAS_WEB_APP_URL}?action=read&_=${Date.now()}`, { cache: 'no-store' });
   const json = await response.json();
 
   if (json.status !== 'success') {
