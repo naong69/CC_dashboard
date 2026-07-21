@@ -87,8 +87,16 @@
         <ul class="nav nav-tabs nav-stacked switcher-tabs">
           <li class="active" data-layer="project"><a href="javascript:void(0)"><b>โครงการ</b></a></li>
           <li data-layer="netcap"><a href="javascript:void(0)"><b>ClimateNETCAP</b></a></li>
-          <li data-layer="rc"><a href="javascript:void(0)"><b>MARS</b></a></li>
-          <li data-layer="cbr"><a href="javascript:void(0)"><b>Local-based Resource</b></a></li>
+          <li data-layer="mars">
+            <a href="javascript:void(0)"><b>MARS</b></a>
+            <ul class="switcher-submenu">
+              <li data-mars-group="M"><a href="javascript:void(0)"><span class="mars-group-letter">M</span>itigation</a></li>
+              <li data-mars-group="A"><a href="javascript:void(0)"><span class="mars-group-letter">A</span>daptation</a></li>
+              <li data-mars-group="R"><a href="javascript:void(0)"><span class="mars-group-letter">R</span>esilience</a></li>
+              <li data-mars-group="S"><a href="javascript:void(0)"><span class="mars-group-letter">S</span>ystem Research</a></li>
+            </ul>
+          </li>
+          <li data-layer="local"><a href="javascript:void(0)"><b>Local-based Resource</b></a></li>
         </ul>
       </div>
     </div>
@@ -110,26 +118,13 @@
         <div id="netcap-region-piechart-container">กราฟวงกลม: จำนวน netcap แยกตามภูมิภาค</div>
         <div id="netcap-node-barchart-container">กราฟแท่ง: จำนวน netcap แยกตาม node</div>
       </div>
-      <div id="legend-rc" class="legend-content">
-        <h2>เครือข่ายวิจัยภูมิภาคและศูนย์วิจัยชุมชน</h2>
-        <p>ข้อมูลเครือข่ายวิจัยภูมิภาคทั้ง 4 ภูมิภาคและศูนย์วิจัยชุมชน</p>
+      <div id="legend-mars" class="legend-content">
+        <div id="mars-region-piechart-container">กราฟวงกลม: จำนวน mars แยกตามภูมิภาค</div>
+        <div id="mars-node-barchart-container">กราฟแท่ง: จำนวน mars แยกตาม node</div>
       </div>
-      <div id="legend-cbr" class="legend-content">
-        <h2>การวิจัยเพื่อท้องถิ่น</h2>
-        <div class="accordion">
-          <div class="accordion-item">
-            <button class="accordion-toggle">+ ภาคเหนือ</button>
-            <div class="accordion-body">
-              <ul><li>ศูนย์ประสานงานวิจัยเพื่อท้องถิ่น จ.น่าน</li></ul>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-toggle">+ ภาคกลาง</button>
-            <div class="accordion-body">
-              <ul><li>ศูนย์ประสานงานวิจัยเพื่อท้องถิ่น จ.เลย</li></ul>
-            </div>
-          </div>
-        </div>
+      <div id="legend-local" class="legend-content">
+        <div id="local-region-piechart-container">กราฟวงกลม: จำนวน local แยกตามภูมิภาค</div>
+        <div id="local-node-barchart-container">กราฟแท่ง: จำนวน local แยกตาม node</div>
       </div>
     </div>
   </div>

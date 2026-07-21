@@ -204,11 +204,14 @@ img.brand-mark {
   border-radius: 8px;
 }
 
-.col-2 { flex: 1 1 calc(16.667% - 14px); }
-.col-4 { flex: 1 1 calc(33.333% - 14px); }
-.col-6 { flex: 1 1 calc(50% - 14px); }
-.col-8 { flex: 2 1 calc(66.667% - 14px); }
-.col-12 { flex: 1 1 100%; }
+/* Scoped to .col.col-N (always paired in this project's own grid markup, e.g.
+   class="col col-4") so these don't collide with Bootstrap's identically-named
+   .col-2/.col-4/.col-12 etc. grid classes used elsewhere (e.g. form.html). */
+.col.col-2 { flex: 1 1 calc(16.667% - 14px); }
+.col.col-4 { flex: 1 1 calc(33.333% - 14px); }
+.col.col-6 { flex: 1 1 calc(50% - 14px); }
+.col.col-8 { flex: 2 1 calc(66.667% - 14px); }
+.col.col-12 { flex: 1 1 100%; }
 
 .col:has(#project-linechart-container) {
   border-style: solid;
@@ -315,7 +318,7 @@ img.brand-mark {
   .project-row.region-stats-row { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 700px) {
-  .col-2, .col-4, .col-6, .col-8, .col-12 { flex: 1 1 100%; }
+  .col.col-2, .col.col-4, .col.col-6, .col.col-8, .col.col-12 { flex: 1 1 100%; }
   .project-row.region-stats-row { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 460px) {
@@ -359,6 +362,37 @@ img.brand-mark {
 .switcher-tabs li:hover { background: #38455c; }
 .switcher-tabs li.active { background: var(--accent); }
 .switcher-tabs li.active a { color: var(--navy); font-weight: 600; }
+
+/* MARS submenu (Mitigation/Adaptation/Resilience/System Research) — hidden until
+   the MARS tab itself is the active one, expanding in place of collapsing. */
+.switcher-submenu {
+  display: none;
+  list-style: none;
+  margin: 6px 0 4px;
+  padding: 0 0 0 10px;
+}
+.switcher-tabs > li.active > .switcher-submenu {
+  display: block;
+}
+.switcher-submenu li {
+  padding: 0;
+  margin-bottom: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  background: transparent;
+}
+.switcher-submenu li a {
+  display: block;
+  padding: 6px 10px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.switcher-submenu li:hover { background: #38455c; }
+.switcher-submenu li.active { background: var(--accent); }
+.switcher-submenu li.active a { color: var(--navy); font-weight: 600; }
+.switcher-submenu li.active .mars-group-letter { color: var(--navy); }
+.mars-group-letter { color: #ffffff; font-weight: 700; }
 
 .scw-switcher-wrap .legend-content { display: none; }
 .scw-switcher-wrap .legend-content.active { display: block; }

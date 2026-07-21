@@ -296,6 +296,155 @@
     localStorage.setItem('NETCAPCountByRegion', JSON.stringify(regionResult));
   }
 
+  // Reads data.target_area (header row + [submission_id, area_no, province_name,
+  // node, region, L1..L6] rows). Unlike NETCAP (whose N/E/T/C/A/P columns live on
+  // the Submission sheet), L1-L6 are already columns on each target_area row itself
+  // — no join needed. For every row, tallies which of L1-L6 are TRUE against that
+  // row's province/node/region, producing [{ name, L1, ..., L6, sum }, ...] for
+  // each. Province is padded onto the full CSV province list (0-filled) and its max
+  // "sum" saved separately as 'LBRCountByProvinceMax'. Node is padded onto N0-N16;
+  // region only includes whichever region values actually appear in the data.
+  function getLBRCountByProvince(data) {
+    if (!provinceNames.length) return; // CSV hasn't loaded yet
+    if (!data || !Array.isArray(data.target_area) || data.target_area.length < 2) return;
+
+    const lbrColumns = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'];
+
+    const [taHeader, ...taRows] = data.target_area;
+    const provinceIndex = taHeader.indexOf('province_name');
+    const nodeIndex = taHeader.indexOf('node');
+    const regionIndex = taHeader.indexOf('region');
+    const lbrIndexes = lbrColumns.map(col => taHeader.indexOf(col));
+    if (provinceIndex === -1 || nodeIndex === -1 || regionIndex === -1 || lbrIndexes.some(i => i === -1)) return;
+
+    const emptyCounts = () => {
+      const counts = {};
+      lbrColumns.forEach(col => { counts[col] = 0; });
+      return counts;
+    };
+
+    const byProvince = new Map();
+    const byNode = new Map();
+    const byRegion = new Map();
+
+    taRows.forEach(row => {
+      [
+        [byProvince, row[provinceIndex]],
+        [byNode, row[nodeIndex]],
+        [byRegion, row[regionIndex]]
+      ].forEach(([map, key]) => {
+        if (!key) return;
+        if (!map.has(key)) map.set(key, emptyCounts());
+        const counts = map.get(key);
+        lbrColumns.forEach((col, i) => { if (row[lbrIndexes[i]] === true) counts[col]++; });
+      });
+    });
+
+    const toResult = (name, counts) => {
+      const sum = lbrColumns.reduce((total, col) => total + counts[col], 0);
+      return { name, ...counts, sum };
+    };
+
+    const provinceResult = provinceNames.map(name => toResult(name, byProvince.get(name) || emptyCounts()));
+    const provinceMax = Math.max(0, ...provinceResult.map(p => p.sum));
+    localStorage.setItem('LBRCountByProvince', JSON.stringify(provinceResult));
+    localStorage.setItem('LBRCountByProvinceMax', String(provinceMax));
+
+    const nodeList = Array.from({ length: 17 }, (_, i) => `N${i}`); // N0..N16
+    const nodeResult = nodeList.map(name => toResult(name, byNode.get(name) || emptyCounts()));
+    localStorage.setItem('LBRCountByNode', JSON.stringify(nodeResult));
+
+    const regionResult = [...byRegion.entries()].map(([name, counts]) => toResult(name, counts));
+    localStorage.setItem('LBRCountByRegion', JSON.stringify(regionResult));
+  }
+
+  // Reads data.target_area (header row + [submission_id, area_no, province_name,
+  // node, region, L1..L6] rows) and links each row to its submission via
+  // submission_id to read that submission's single selected "MARS" code (e.g. "M1")
+  // from data.submission. For every target_area row, tallies that code against its
+  // province/node/region, grouped by M/A/R/S, producing
+  // { name, M: { M1, ..., M6, SUM }, A: { A1, ..., A8, SUM }, R: {...}, S: {...} }
+  // for each. Province is padded onto the full CSV province list (0-filled); node is
+  // padded onto N0-N16; region only includes whichever region values actually appear.
+  function getMARSCountByProvince(data) {
+    if (!provinceNames.length) return; // CSV hasn't loaded yet
+    if (!data || !Array.isArray(data.target_area) || data.target_area.length < 2) return;
+    if (!Array.isArray(data.submission) || data.submission.length < 2) return;
+
+    const marsGroupCodes = {
+      M: ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'],
+      A: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'],
+      R: ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8'],
+      S: ['S1', 'S2', 'S3', 'S4', 'S5']
+    };
+    const codeToGroup = {};
+    Object.keys(marsGroupCodes).forEach(group => {
+      marsGroupCodes[group].forEach(code => { codeToGroup[code] = group; });
+    });
+
+    const [subHeader, ...subRows] = data.submission;
+    const subIdIndex = subHeader.indexOf('submission_id');
+    const marsIndex = subHeader.indexOf('MARS');
+    if (subIdIndex === -1 || marsIndex === -1) return;
+
+    // submission_id -> MARS code (e.g. "M1")
+    const marsBySubmission = new Map();
+    subRows.forEach(row => { marsBySubmission.set(row[subIdIndex], row[marsIndex]); });
+
+    const [taHeader, ...taRows] = data.target_area;
+    const taIdIndex = taHeader.indexOf('submission_id');
+    const provinceIndex = taHeader.indexOf('province_name');
+    const nodeIndex = taHeader.indexOf('node');
+    const regionIndex = taHeader.indexOf('region');
+    if (taIdIndex === -1 || provinceIndex === -1 || nodeIndex === -1 || regionIndex === -1) return;
+
+    const emptyGroups = () => {
+      const groups = {};
+      Object.keys(marsGroupCodes).forEach(group => {
+        groups[group] = { SUM: 0 };
+        marsGroupCodes[group].forEach(code => { groups[group][code] = 0; });
+      });
+      return groups;
+    };
+
+    const byProvince = new Map();
+    const byNode = new Map();
+    const byRegion = new Map();
+
+    taRows.forEach(row => {
+      const code = marsBySubmission.get(row[taIdIndex]);
+      const group = codeToGroup[code];
+      if (!group) return;
+
+      [
+        [byProvince, row[provinceIndex]],
+        [byNode, row[nodeIndex]],
+        [byRegion, row[regionIndex]]
+      ].forEach(([map, key]) => {
+        if (!key) return;
+        if (!map.has(key)) map.set(key, emptyGroups());
+        const groups = map.get(key);
+        groups[group][code]++;
+        groups[group].SUM++;
+      });
+    });
+
+    const toResult = (name, groups) => {
+      const sum = Object.keys(marsGroupCodes).reduce((total, group) => total + groups[group].SUM, 0);
+      return { name, SUM: sum, ...groups };
+    };
+
+    const provinceResult = provinceNames.map(name => toResult(name, byProvince.get(name) || emptyGroups()));
+    localStorage.setItem('MARSCountByProvince', JSON.stringify(provinceResult));
+
+    const nodeList = Array.from({ length: 17 }, (_, i) => `N${i}`); // N0..N16
+    const nodeResult = nodeList.map(name => toResult(name, byNode.get(name) || emptyGroups()));
+    localStorage.setItem('MARSCountByNode', JSON.stringify(nodeResult));
+
+    const regionResult = [...byRegion.entries()].map(([name, groups]) => toResult(name, groups));
+    localStorage.setItem('MARSCountByRegion', JSON.stringify(regionResult));
+  }
+
   function prepareData(data) {
     if (!data) return;
     getProjectCountStat(data);
@@ -307,6 +456,8 @@
     getProjectCountByProvince(data);
     getProjectCountByNode(data);
     getNETCAPCountByProvince(data);
+    getLBRCountByProvince(data);
+    getMARSCountByProvince(data);
     window.dispatchEvent(new CustomEvent('ccDataPrepared'));
   }
 
